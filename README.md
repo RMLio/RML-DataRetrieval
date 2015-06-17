@@ -19,7 +19,7 @@ More information about the solution can be found at http://rml.io
 
 This application is developed by Multimedia Lab http://www.mmlab.be
 
-Copyright 2014, Multimedia Lab - Ghent University - iMinds
+Copyright 2015, Multimedia Lab - Ghent University - iMinds
 
 License
 -------
