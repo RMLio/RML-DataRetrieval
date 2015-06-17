@@ -1,42 +1,16 @@
-RMLProcessor
-============
+RML Data Retrieval
+==================
 
-Processor for RML (R2RML extension) in Java based on [DB2Triples](https://github.com/antidot/db2triples/)
+Implementation for RML Data Retrieval in Java to support the [RML Processor](https://github.com/mmlab/RMLProcessor/)
 
-Class diagram
--------------
-![alt text](https://raw.github.com/mmlab/RMLProcessor/master/docs/class-diagram.jpg)
+The existing implementation supports different dataset and service descriptions for data access in RDF.
 
-Installation
-------------
-
-The processor can be installed using Maven, so make sure you have installed it first: http://maven.apache.org/download.cgi and java 1.7
-
-    mvn clean install
-
-Usage
------
-You can run a mapping process by executing the following command.
-
-Master branch:    
-    
-    java -jar target/RMLMapper-0.1.jar -m <mapping_file> -f <output_file> -o <output_format> [-g <graph>]
-
-With 
-    
-    <mapping_file>  = The RML mapping file conform with the [RML specification](http://semweb.mmlab.be/ns/rml)
-    <output_file>   = The file where the output RDF triples are stored; default in [N-Triples](http://www.w3.org/TR/n-triples/) syntax.
-    <output_format> = The prefered output format, use one of the followings: turtle, ntriples, nquads, rdfxml, rdfjson, jsonld.
-    <graph> (optional) = The named graph in which the output RDF triples are stored.
-        
-For instance, to run example1, execute the following command by replacing the paths to the files with the local paths:
-
-    java -jar target/RMLMapper-0.1.jar /path/to/the/mapping/document/example.rml.ttl /path/to/the/output/file/example1_test.output.nt
-
-Remark
------
-
-On OSX, it might be needed to export JAVA_HOME=$(/usr/libexec/java_home)
+The access interfaces supported at the moment are 
+* Dump files
+* [DCAT](http://www.w3.org/TR/vocab-dcat/) for Data Catalogues
+* [Hydra](http://www.w3.org/ns/hydra/spec/latest/core/) for Web APIs
+* subset of [D2RQ](http://d2rq.org/d2rq-language) for Database Access Interface
+* [SPARQL-SD](http://www.w3.org/TR/sparql11-service-description/) for SPARQL Service
 
 More Information
 ----------------

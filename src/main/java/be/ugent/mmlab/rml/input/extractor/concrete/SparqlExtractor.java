@@ -14,6 +14,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 
 /**
+ * RML - Data Retrieval
  *
  * @author andimou
  */

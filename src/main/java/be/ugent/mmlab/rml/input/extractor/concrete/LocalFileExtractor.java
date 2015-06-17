@@ -10,6 +10,7 @@ import org.apache.log4j.LogManager;
 import org.openrdf.model.Resource;
 
 /**
+ * RML - Data Retrieval
  *
  * @author andimou
  */

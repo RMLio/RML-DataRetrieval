@@ -8,6 +8,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
+ * RML - Data Retrieval
  *
  * @author andimou
  */
@@ -20,10 +21,19 @@ public class StdInputSource implements InputSource{
     private String source;
     private Set<TriplesMap> triplesMaps;
 
+    /**
+     *
+     * @param name
+     */
     public StdInputSource(String name) {
         setName(name);
     }
 
+    /**
+     *
+     * @param name
+     * @param source
+     */
     public StdInputSource(String name, String source) {
         setSource(source);
         setName(name);
@@ -39,6 +49,10 @@ public class StdInputSource implements InputSource{
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public String getName(){
         return this.name;
     }

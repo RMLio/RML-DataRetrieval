@@ -13,6 +13,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.vocabulary.RDF;
 
 /**
+ * RML - Data Retrieval
  *
  * @author andimou
  */
@@ -37,10 +38,10 @@ public class ConcreteInputFactory implements InputFactory {
                 input = new SparqlExtractor();
                 inputSources = input.extractInput(rmlMappingGraph, resource);
                 break;
-            /*case("http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database"):
+            case("http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database"):
                 input = new DbExtractor();
                 inputSources = input.extractInput(rmlMappingGraph, resource);
-                break;*/
+                break;
             default:
                 log.error("Not identified input");
         }

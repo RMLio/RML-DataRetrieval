@@ -20,6 +20,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 
 /**
+ * RML - Data Retrieval
  *
  * @author andimou
  */
@@ -28,6 +29,11 @@ public class StdInputExtractor implements InputExtractor {
     // Log
     private static final Logger log = LogManager.getLogger(StdInputExtractor.class);
     
+    /**
+     *
+     * @param rmlMappingGraph
+     * @return
+     */
     public Map<Resource, InputSource> extractInputResources(RMLSesameDataSet rmlMappingGraph) {
         Map<Resource, InputSource> inputResources = new HashMap<Resource, InputSource>();
         
@@ -38,6 +44,11 @@ public class StdInputExtractor implements InputExtractor {
         return inputResources;
     }
     
+    /**
+     *
+     * @param rmlMappingGraph
+     * @return
+     */
     protected List<Statement> getInputResources(RMLSesameDataSet rmlMappingGraph) {
         
         List<Statement> inputStatements = new ArrayList<Statement>();
@@ -50,6 +61,13 @@ public class StdInputExtractor implements InputExtractor {
         return inputStatements;
     }
     
+    /**
+     *
+     * @param rmlMappingGraph
+     * @param statements
+     * @param inputResources
+     * @return
+     */
     protected Map<Resource, InputSource> putInputResources(RMLSesameDataSet rmlMappingGraph,
             List<Statement> statements, Map<Resource, InputSource> inputResources) {
         URI p = rmlMappingGraph.URIref(RMLVocabulary.RML_NAMESPACE
@@ -73,6 +91,12 @@ public class StdInputExtractor implements InputExtractor {
         return inputResources;
     }
     
+    /**
+     *
+     * @param rmlMappingGraph
+     * @param inputResource
+     * @param inputResources
+     */
     public void extractInputSource(
             RMLSesameDataSet rmlMappingGraph, Resource inputResource,
             Map<Resource, InputSource> inputResources) {
@@ -97,6 +121,12 @@ public class StdInputExtractor implements InputExtractor {
     }
     
     
+    /**
+     *
+     * @param rmlMappingGraph
+     * @param inputResource
+     * @return
+     */
     protected Set<TriplesMap> extractTriplesMaps(
             RMLSesameDataSet rmlMappingGraph, Resource inputResource) {
         Set<TriplesMap> triplesMaps = new HashSet<TriplesMap>();
@@ -115,6 +145,14 @@ public class StdInputExtractor implements InputExtractor {
         return triplesMaps;
     }
     
+    /**
+     *
+     * @param rmlMappingGraph
+     * @param term
+     * @param resource
+     * @param triplesMap
+     * @return
+     */
     protected List<Statement> getStatements(
             RMLSesameDataSet rmlMappingGraph, Enum term,  Resource resource, TriplesMap triplesMap){
         URI p = getTermURI(rmlMappingGraph, term);
@@ -125,6 +163,12 @@ public class StdInputExtractor implements InputExtractor {
         return statements;
     }
     
+    /**
+     *
+     * @param rmlMappingGraph
+     * @param term
+     * @return
+     */
     protected static URI getTermURI(RMLSesameDataSet rmlMappingGraph, Enum term) {
         String namespace = R2RMLVocabulary.R2RML_NAMESPACE;
 
@@ -142,7 +186,7 @@ public class StdInputExtractor implements InputExtractor {
 
     @Override
     public Set<InputSource> extractInput(RMLSesameDataSet rmlMappingGraph, Resource resource) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
 }

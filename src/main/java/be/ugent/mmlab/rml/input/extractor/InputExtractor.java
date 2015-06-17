@@ -6,11 +6,12 @@ import java.util.Set;
 import org.openrdf.model.Resource;
 
 /**
+ * RML - Data Retrieval
  *
  * @author andimou
  */
 public interface InputExtractor {
-    
+
     /**
      *
      * @param source
@@ -18,12 +19,9 @@ public interface InputExtractor {
      * @return
      */
     //InputStream getInputStream (String source, TriplesMap triplesMap);
-    
     /**
      *
      * @return
      */
-    public Set<InputSource> extractInput (RMLSesameDataSet rmlMappingGraph, Resource resource);
-    
-    
+    public Set<InputSource> extractInput(RMLSesameDataSet rmlMappingGraph, Resource resource);
 }

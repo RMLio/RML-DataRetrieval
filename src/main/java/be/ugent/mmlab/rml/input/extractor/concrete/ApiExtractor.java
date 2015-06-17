@@ -16,6 +16,7 @@ import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
 /**
+ * RML - Data Retrieval
  *
  * @author andimou
  */
