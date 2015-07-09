@@ -2,7 +2,8 @@ package be.ugent.mmlab.rml.input.processor;
 
 import be.ugent.mmlab.rml.model.TriplesMap;
 import java.io.InputStream;
-import org.apache.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -13,7 +14,7 @@ import org.apache.log4j.LogManager;
 public class AbstractInputProcessor implements InputProcessor {
     
     // Log
-    private static final org.apache.log4j.Logger log = LogManager.getLogger(AbstractInputProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractInputProcessor.class);
     
     @Override
     public InputStream getInputStream(TriplesMap triplesMap, String source) {

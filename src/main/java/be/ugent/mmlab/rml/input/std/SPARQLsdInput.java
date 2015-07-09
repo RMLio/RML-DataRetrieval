@@ -5,8 +5,8 @@ import be.ugent.mmlab.rml.model.TriplesMap;
 import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
 import java.util.List;
 import java.util.Set;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.Value;
@@ -21,7 +21,7 @@ import org.openrdf.model.vocabulary.SD;
  */
 public class SPARQLsdInput implements InputSource{
     // Log
-    private static final Logger log = LogManager.getLogger(SPARQLsdInput.class);
+    private static final Logger log = LoggerFactory.getLogger(SPARQLsdInput.class);
     // Value factory
     private static ValueFactory vf = new ValueFactoryImpl();
     

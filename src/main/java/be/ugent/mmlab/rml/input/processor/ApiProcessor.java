@@ -6,7 +6,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.apache.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RML - Data Retrieval Handler : ApiProcessor
@@ -16,7 +17,7 @@ import org.apache.log4j.LogManager;
 public class ApiProcessor extends AbstractInputProcessor {
     
     // Log
-    private static final org.apache.log4j.Logger log = LogManager.getLogger(ApiProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiProcessor.class);
     
     @Override
     public InputStream getInputStream(TriplesMap triplesMap, String source) {

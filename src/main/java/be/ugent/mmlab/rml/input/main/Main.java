@@ -2,18 +2,11 @@ package be.ugent.mmlab.rml.input.main;
 
 import be.ugent.mmlab.rml.input.InputFactory;
 import be.ugent.mmlab.rml.input.config.DataRetrievalHandlerConfiguration;
-import be.ugent.mmlab.rml.model.RMLMapping;
-import be.ugent.mmlab.rml.model.TriplesMap;
-import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
-import be.ugent.mmlab.rml.vocabulary.Vocab;
-import java.util.Map;
 import java.util.logging.Level;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.openrdf.model.Resource;
-import org.openrdf.rio.RDFFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RML Data Retrieval Handler : Main
@@ -23,14 +16,18 @@ import org.openrdf.rio.RDFFormat;
 public class Main {
     
     // Log
-    Logger log = LogManager.getLogger(Main.class);
+    static final Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         String map_doc;
         CommandLine commandLine ;
         
+        log.error("Hello World");
+        
         try {
             commandLine = DataRetrievalHandlerConfiguration.parseArguments(args);
+            
+            log.error("commandLine" + commandLine);
 
             if (commandLine.hasOption("m")) {
                 map_doc = commandLine.getOptionValue("m", null);
@@ -40,6 +37,11 @@ public class Main {
 
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (log.isDebugEnabled()) {
+            log.debug("Hello World!");
+            log.debug("Nothing happens...");
         }
 
         System.out.println("--------------------------------------------------------------------------------");

@@ -8,7 +8,8 @@ import be.ugent.mmlab.rml.vocabulary.SPARQLSDVocabulary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.apache.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
@@ -21,7 +22,7 @@ import org.openrdf.model.URI;
 public class SparqlExtractor extends AbstractInputExtractor {
 
     // Log
-    private static final org.apache.log4j.Logger log = LogManager.getLogger(SparqlExtractor.class);
+    private static final Logger log = LoggerFactory.getLogger(SparqlExtractor.class);
 
     @Override
     public Set<InputSource> extractInput(RMLSesameDataSet rmlMappingGraph, Resource resource) {

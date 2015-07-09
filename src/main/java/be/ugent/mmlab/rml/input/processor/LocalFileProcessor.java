@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.apache.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RML - Data Retrieval Handler : LocalFileProcessor
@@ -17,7 +18,7 @@ import org.apache.log4j.LogManager;
 public class LocalFileProcessor extends AbstractInputProcessor {
     
     // Log
-    private static final org.apache.log4j.Logger log = LogManager.getLogger(LocalFileProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(LocalFileProcessor.class);
     
     @Override
      public InputStream getInputStream(TriplesMap triplesMap, String source) {

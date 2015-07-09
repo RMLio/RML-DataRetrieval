@@ -3,8 +3,8 @@ package be.ugent.mmlab.rml.input.std;
 import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.model.TriplesMap;
 import java.util.Set;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RML - Data Retrieval : StdInputSource
@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 public class StdInputSource implements InputSource{
     
     // Log
-    private static final Logger log = LogManager.getLogger(StdInputSource.class);
+    private static final Logger log = LoggerFactory.getLogger(StdInputSource.class);
     
     private String name;
     private String source;

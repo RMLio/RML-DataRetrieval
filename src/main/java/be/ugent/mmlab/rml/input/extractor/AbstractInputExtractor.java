@@ -3,7 +3,8 @@ package be.ugent.mmlab.rml.input.extractor;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
-import org.apache.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RML - Data Retrieval Handler : AbstractInputExtractor
@@ -13,7 +14,7 @@ import org.apache.log4j.LogManager;
 abstract public class AbstractInputExtractor implements InputExtractor {
 
     // Log
-    private static final org.apache.log4j.Logger log = LogManager.getLogger(AbstractInputExtractor.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractInputExtractor.class);
 
     
     /**

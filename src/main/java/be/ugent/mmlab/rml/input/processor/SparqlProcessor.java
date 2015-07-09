@@ -6,7 +6,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.apache.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RML - Data Retrieval Handler : SparqlProcessor
@@ -15,7 +16,7 @@ import org.apache.log4j.LogManager;
  */
 public class SparqlProcessor extends AbstractInputProcessor {
     // Log
-    private static final org.apache.log4j.Logger log = LogManager.getLogger(SparqlProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(SparqlProcessor.class);
     
     //TODO:change or move function to AbstractInputProcessor
     @Override

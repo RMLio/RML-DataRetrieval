@@ -6,7 +6,8 @@ import be.ugent.mmlab.rml.input.model.std.LocalFileSource;
 import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
 
 /**
@@ -17,7 +18,7 @@ import org.openrdf.model.Resource;
 public class LocalFileExtractor extends AbstractInputExtractor {
     
     // Log
-    private static final org.apache.log4j.Logger log = LogManager.getLogger(LocalFileExtractor.class);
+    private static final Logger log = LoggerFactory.getLogger(LocalFileExtractor.class);
     
     public Set<InputSource> extractInput(RMLSesameDataSet rmlMappingGraph, String source) {
         Set<InputSource> inputSources = new HashSet<InputSource>();

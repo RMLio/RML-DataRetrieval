@@ -13,8 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
@@ -27,7 +27,7 @@ import org.openrdf.model.URI;
 public class StdInputExtractor implements InputExtractor {
     
     // Log
-    private static final Logger log = LogManager.getLogger(StdInputExtractor.class);
+    private static final Logger log = LoggerFactory.getLogger(StdInputExtractor.class);
     
     /**
      *
@@ -188,5 +188,13 @@ public class StdInputExtractor implements InputExtractor {
     public Set<InputSource> extractInput(RMLSesameDataSet rmlMappingGraph, Resource resource) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
+    
+    /*public Map<Resource, InputSource> extractInputResources(SesameDataSet dataset) {
+        Map<Resource, InputSource> inputResources = new HashMap<Resource, InputSource>();
+        
+       
+
+        return inputResources;
+    }*/
 
 }

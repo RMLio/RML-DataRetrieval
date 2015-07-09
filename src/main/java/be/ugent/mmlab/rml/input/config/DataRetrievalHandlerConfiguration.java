@@ -6,8 +6,8 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * RML Data Retrieval Handler : DataRetrievalHandlerConfiguration
@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 public class DataRetrievalHandlerConfiguration {
     
     // Log
-    private static final Logger log = LogManager.getLogger(DataRetrievalHandlerConfiguration.class);
+    private static final Logger log = LoggerFactory.getLogger(DataRetrievalHandlerConfiguration.class);
     private static final Options cliOptions = generateCLIOptions();
     
     public static CommandLine parseArguments(String[] args) throws ParseException {
