@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.extractor.concrete;
 
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.input.extractor.AbstractInputExtractor;
 import be.ugent.mmlab.rml.input.model.std.ApiInputSource;
 import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
@@ -16,7 +16,7 @@ import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : ApiExtractor
  *
  * @author andimou
  */

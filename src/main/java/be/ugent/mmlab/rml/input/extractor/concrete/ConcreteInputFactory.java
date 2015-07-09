@@ -1,7 +1,7 @@
 package be.ugent.mmlab.rml.input.extractor.concrete;
 
 import be.ugent.mmlab.rml.input.InputFactory;
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.input.extractor.InputExtractor;
 import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.vocabulary.RDF;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : ConcreteInputFactory
  *
  * @author andimou
  */

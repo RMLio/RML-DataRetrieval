@@ -3,7 +3,7 @@ package be.ugent.mmlab.rml.input.model.std;
 import be.ugent.mmlab.rml.input.std.StdInputSource;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : LocalFileSource
  *
  * @author andimou
  */

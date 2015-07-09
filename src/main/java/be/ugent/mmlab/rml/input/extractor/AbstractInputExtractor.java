@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 import org.apache.log4j.LogManager;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : AbstractInputExtractor
  *
  * @author andimou
  */

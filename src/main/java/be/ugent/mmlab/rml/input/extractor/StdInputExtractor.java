@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.extractor;
 
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.input.std.StdInputSource;
 import be.ugent.mmlab.rml.model.TriplesMap;
 import be.ugent.mmlab.rml.model.std.StdTriplesMap;
@@ -20,7 +20,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : StdInputExtractor
  *
  * @author andimou
  */
@@ -112,7 +112,7 @@ public class StdInputExtractor implements InputExtractor {
         
         // Add triples maps
         for (TriplesMap triplesMap : triplesMaps) {
-            result.addTriplesMap(triplesMap);
+            result.setTriplesMap(triplesMap);
         }      
 
         log.info(Thread.currentThread().getStackTrace()[1].getMethodName() + ": "

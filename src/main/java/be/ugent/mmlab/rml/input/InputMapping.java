@@ -1,11 +1,11 @@
 package be.ugent.mmlab.rml.input;
 
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : InputMapping
  *
  * @author andimou
  */

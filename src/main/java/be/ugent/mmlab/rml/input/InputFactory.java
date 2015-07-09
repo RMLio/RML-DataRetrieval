@@ -1,7 +1,7 @@
 package be.ugent.mmlab.rml.input;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : InputFactory
  *
  * @author andimou
  */

@@ -1,12 +1,12 @@
 package be.ugent.mmlab.rml.input.extractor;
 
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
 import java.util.Set;
 import org.openrdf.model.Resource;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : InputExtractor
  *
  * @author andimou
  */

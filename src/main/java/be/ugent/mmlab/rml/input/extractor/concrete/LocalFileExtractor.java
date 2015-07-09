@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.extractor.concrete;
 
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.input.extractor.AbstractInputExtractor;
 import be.ugent.mmlab.rml.input.model.std.LocalFileSource;
 import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
@@ -10,7 +10,7 @@ import org.apache.log4j.LogManager;
 import org.openrdf.model.Resource;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : LocalFileExtractor
  *
  * @author andimou
  */

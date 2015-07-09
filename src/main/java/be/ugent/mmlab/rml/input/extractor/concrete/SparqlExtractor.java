@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.extractor.concrete;
 
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.input.extractor.AbstractInputExtractor;
 import be.ugent.mmlab.rml.input.model.std.SparqlSdInputSource;
 import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
@@ -14,7 +14,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval Handler : SparqlExtractor
  *
  * @author andimou
  */

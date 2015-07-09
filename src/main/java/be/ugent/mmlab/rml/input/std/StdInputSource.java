@@ -1,14 +1,13 @@
 package be.ugent.mmlab.rml.input.std;
 
-import be.ugent.mmlab.rml.input.model.InputSource;
+import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.model.TriplesMap;
-import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * RML - Data Retrieval
+ * RML - Data Retrieval : StdInputSource
  *
  * @author andimou
  */
@@ -57,7 +56,8 @@ public class StdInputSource implements InputSource{
         return this.name;
     }
     
-    private void setSource(String source) {
+    @Override
+    public void setSource(String source) {
         if (source != null) {
             this.source = source;
         }
@@ -73,14 +73,14 @@ public class StdInputSource implements InputSource{
      * @param triplesMap
      */
     @Override
-    public void addTriplesMap(TriplesMap triplesMap) {
+    public void setTriplesMap(TriplesMap triplesMap) {
         if (triplesMap != null) {
             triplesMaps.add(triplesMap);
         }
     }
 
-    private void setTriplesMap(String triplesMap) {
-        this.triplesMaps = new HashSet<TriplesMap>();
+    public Set<TriplesMap> getTriplesMap() {
+        return this.triplesMaps;
     }
 
 }
