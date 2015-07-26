@@ -2,9 +2,9 @@ package be.ugent.mmlab.rml.input.extractor.concrete;
 
 import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.input.extractor.AbstractInputExtractor;
-import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
 import java.util.Set;
 import org.openrdf.model.Resource;
+import org.openrdf.repository.Repository;
 
 /**
  * RML - Data Retrieval Handler : DbExtractor
@@ -19,7 +19,7 @@ public class DbExtractor extends AbstractInputExtractor {
     }
 
         @Override
-        public Set<InputSource> extractInput(RMLSesameDataSet rmlMappingGraph, Resource resource) {
+        public Set<InputSource> extractInput(Repository repository, Resource resource) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
     

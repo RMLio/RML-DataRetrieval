@@ -2,17 +2,23 @@ package be.ugent.mmlab.rml.input.std;
 
 import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.model.TriplesMap;
-import be.ugent.mmlab.rml.sesame.RMLSesameDataSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
+import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
+import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.SD;
+import org.openrdf.repository.Repository;
+import org.openrdf.repository.RepositoryConnection;
+import org.openrdf.repository.RepositoryException;
+import org.openrdf.repository.RepositoryResult;
 
 /**
  * RML - Data Retrieval : SPARQLsdInput
@@ -32,20 +38,20 @@ public class SPARQLsdInput implements InputSource{
     
     public SPARQLsdInput(){};
     
-    public SPARQLsdInput(RMLSesameDataSet rmlMappingGraph, Value source){ 
-        Object endpoint = extractEndpoint(rmlMappingGraph, (Resource) source);
+    public SPARQLsdInput(Repository repository, Value source){ 
+        Object endpoint = extractEndpoint(repository, (Resource) source);
         if(endpoint != null)
             this.endpoint = endpoint;
         
-        String value = extractSupportedLanguage(rmlMappingGraph, (Resource) source);
+        String value = extractSupportedLanguage(repository, (Resource) source);
         if(value != null)
             this.supportedLanguage = value;
         
-        value = extractResultFormat(rmlMappingGraph, (Resource) source);
+        value = extractResultFormat(repository, (Resource) source);
         if(value != null)
             this.resultFormat = value;
         
-        value = extractSparqlQueryTemplate(rmlMappingGraph, (Resource) source);
+        value = extractSparqlQueryTemplate(repository, (Resource) source);
         if(value != null)
             this.supportedLanguage = value;
     };
@@ -69,10 +75,19 @@ public class SPARQLsdInput implements InputSource{
      * @param rmlMappingGraph
      * @param statement
      */
-    public void extract (RMLSesameDataSet rmlMappingGraph, Statement statement) {
-        
-        List<Statement> source = rmlMappingGraph.tuplePattern(
-                    (Resource) statement.getObject(), vf.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#" + "type"), null);
+    public void extract (Repository repository, Statement statement) {
+        try {
+            RepositoryConnection connection = repository.getConnection();
+
+            //vf.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#" + "type")
+            RepositoryResult<Statement> source = 
+                    connection.getStatements((Resource) statement.getObject(), RDF.TYPE, null, true);
+            
+            connection.close();
+
+        } catch (RepositoryException ex) {
+            log.error("RepositoryException " + ex);
+        }
         
     }
     
@@ -114,9 +129,18 @@ public class SPARQLsdInput implements InputSource{
      * @param source
      * @return
      */
-    public Object extractEndpoint(RMLSesameDataSet rmlMappingGraph, Resource source) {
-        List<Statement> statements = rmlMappingGraph.tuplePattern(
-                (Resource) source, vf.createURI("http://www.w3.org/TR/sparql-service-description#endpoint"), null);
+    public Object extractEndpoint(Repository repository, Resource source) {
+        RepositoryResult<Statement> statements = null;
+        try {
+            RepositoryConnection connection = repository.getConnection();
+            URI p = vf.createURI("http://www.w3.org/TR/sparql-service-description#endpoint");
+            statements = connection.getStatements(source, p, null, true);
+            
+            connection.close();
+        } catch (RepositoryException ex) {
+            log.error("RepositoryException " + ex);
+        }
+        
         return statements;
     }
     
@@ -126,9 +150,18 @@ public class SPARQLsdInput implements InputSource{
      * @param source
      * @return
      */
-    public String extractSupportedLanguage(RMLSesameDataSet rmlMappingGraph, Resource source) {
-        List<Statement> statements = rmlMappingGraph.tuplePattern(source, SD.SUPPORTED_LANGUAGE, null);
-        return statements.get(0).getObject().stringValue();
+    public String extractSupportedLanguage(Repository repository, Resource source) {
+        String statement = null;
+        try {
+            RepositoryConnection connection = repository.getConnection();
+            RepositoryResult<Statement> statements = 
+                    connection.getStatements(source, SD.SUPPORTED_LANGUAGE, null, true);
+            statement = statements.next().getObject().stringValue();
+            connection.close();
+        } catch (RepositoryException ex) {
+            log.error("RepositoryException " + ex);
+        }
+        return statement;
     }
     
     /**
@@ -137,9 +170,18 @@ public class SPARQLsdInput implements InputSource{
      * @param source
      * @return
      */
-    public String extractResultFormat(RMLSesameDataSet rmlMappingGraph, Resource source) {
-        List<Statement> statements = rmlMappingGraph.tuplePattern(source, SD.RESULT_FORMAT, null);
-        return statements.get(0).getObject().stringValue();
+    public String extractResultFormat(Repository repository, Resource source) {
+        String statement = null ;
+        try {
+            RepositoryConnection connection = repository.getConnection();
+            RepositoryResult<Statement> statements = 
+                    connection.getStatements(source, SD.RESULT_FORMAT, null, true);
+            statement = statements.next().getObject().stringValue();
+            connection.close();
+        } catch (RepositoryException ex) {
+            log.error("RepositoryException " + ex);
+        }
+        return statement;
     }
     
     /**
@@ -148,9 +190,21 @@ public class SPARQLsdInput implements InputSource{
      * @param source
      * @return
      */
-    public String extractSparqlQueryTemplate(RMLSesameDataSet rmlMappingGraph, Resource source) {
-        List<Statement> statements = rmlMappingGraph.tuplePattern(source, vf.createURI(SD.NAMESPACE + "sparqlQueryTemplate"), null);
-        return statements.get(0).getObject().stringValue();
+    public String extractSparqlQueryTemplate(Repository repository, Resource source) {
+        RepositoryResult<Statement> statements;
+        String stringStatement = null;
+        try {
+            RepositoryConnection connection = repository.getConnection();
+            
+            URI p = vf.createURI(SD.NAMESPACE + "sparqlQueryTemplate");
+            statements = connection.getStatements(source, p, source, true);
+
+            stringStatement = statements.next().getObject().stringValue();
+            connection.close();
+        } catch (RepositoryException ex) {
+            log.error("RepositoryException " + ex);
+        }
+        return stringStatement;
     }
 
     @Override

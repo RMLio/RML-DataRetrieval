@@ -13,6 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sesame.version>2.7.14</sesame.version>
+        <slf4j.version>1.7.12</slf4j.version>
     </properties>
     <build>
         <plugins>
@@ -86,12 +87,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j.version}</version> 
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j.version}</version> 
         </dependency>
         <dependency>
             <groupId>org.openrdf.sesame</groupId>  
@@ -99,10 +100,20 @@
             <version>${sesame.version}</version> 
         </dependency>
         <dependency>
-            <groupId>be.ugent.mmlab</groupId>
+            <groupId>be.ugent.mmlab.rml</groupId>
             <artifactId>RML-Model</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions> 
         </dependency>
-    </dependencies>       
-
+    </dependencies>      
+    
 </project>
