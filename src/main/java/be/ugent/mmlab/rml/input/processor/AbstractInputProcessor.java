@@ -1,9 +1,11 @@
 package be.ugent.mmlab.rml.input.processor;
 
+import be.ugent.mmlab.rml.input.std.StdJdbcInputSource;
 import be.ugent.mmlab.rml.model.TriplesMap;
 import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 
 /**
@@ -15,6 +17,14 @@ public class AbstractInputProcessor implements InputProcessor {
     
     // Log
     private static final Logger log = LoggerFactory.getLogger(AbstractInputProcessor.class);
+    
+    public InputStream getInputStream(TriplesMap triplesMap) {
+        
+        String source = triplesMap.getLogicalSource().getInputSource().getSource();
+        
+        InputStream inputStream = getInputStream(triplesMap, source);
+        return inputStream;
+    }
     
     @Override
     public InputStream getInputStream(TriplesMap triplesMap, String source) {
@@ -36,9 +46,11 @@ public class AbstractInputProcessor implements InputProcessor {
                 inputProcessor = new SparqlProcessor();
                 inputStream = inputProcessor.getInputStream(triplesMap, source);
                 break;
-            case ("DbInputSource"):
-                inputProcessor = new DbProcessor();
-                inputStream = inputProcessor.getInputStream(triplesMap, source);
+            case ("JdbcInputSource"):
+                JdbcProcessor jdbcProcessor = new JdbcProcessor();
+                StdJdbcInputSource mapSource = null;
+                JdbcTemplate jdcTemplate = jdbcProcessor.getJdbcConnection(mapSource);
+                //inputStream = inputProcessor.getInputStream(triplesMap, source);
                 break;
             default:
                 log.error("Not identified input");

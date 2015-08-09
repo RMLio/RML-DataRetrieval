@@ -225,14 +225,6 @@ public class StdInputExtractor implements InputExtractor {
     @Override
     public Set<InputSource> extractInput(Repository repository, Resource resource) {
         throw new UnsupportedOperationException("Not supported yet."); 
-    }
-    
-    /*public Map<Resource, InputSource> extractInputResources(SesameDataSet dataset) {
-        Map<Resource, InputSource> inputResources = new HashMap<Resource, InputSource>();
-        
-       
-
-        return inputResources;
-    }*/
+}
 
 }

@@ -42,7 +42,7 @@ public class ConcreteInputFactory implements InputFactory {
                     inputSources = input.extractInput(repository, resource);
                     break;
                 case("http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#Database"):
-                    input = new DbExtractor();
+                    input = new JdbcExtractor();
                     inputSources = input.extractInput(repository, resource);
                     break;
                 default:

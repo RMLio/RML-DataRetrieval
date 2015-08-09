@@ -36,7 +36,7 @@ public class Main {
             InputFactory inputFactory ;
 
         } catch (ParseException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Parse Exception s" + ex);
         }
         
         if (log.isDebugEnabled()) {

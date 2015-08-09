@@ -7,13 +7,14 @@ import be.ugent.mmlab.rml.input.std.StdInputSource;
  *
  * @author andimou
  */
-public class DbInputSource extends StdInputSource {
+public class JdbcInputSource extends StdInputSource {
 
     /**
      *
      * @param name
      */
-    public DbInputSource(String name) {
+    public JdbcInputSource(String name){
         super(name);
     }
+    
 }

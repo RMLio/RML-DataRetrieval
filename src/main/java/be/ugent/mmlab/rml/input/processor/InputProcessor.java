@@ -17,5 +17,5 @@ public interface InputProcessor {
      * @return
      */
     public InputStream getInputStream(TriplesMap triplesMap, String source);
-    
+
 }

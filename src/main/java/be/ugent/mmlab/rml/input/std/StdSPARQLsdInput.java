@@ -2,9 +2,7 @@ package be.ugent.mmlab.rml.input.std;
 
 import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.model.TriplesMap;
-import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
@@ -25,9 +23,9 @@ import org.openrdf.repository.RepositoryResult;
  *
  * @author andimou
  */
-public class SPARQLsdInput implements InputSource{
+public class StdSPARQLsdInput implements InputSource{
     // Log
-    private static final Logger log = LoggerFactory.getLogger(SPARQLsdInput.class);
+    private static final Logger log = LoggerFactory.getLogger(StdSPARQLsdInput.class);
     // Value factory
     private static ValueFactory vf = new ValueFactoryImpl();
     
@@ -36,9 +34,9 @@ public class SPARQLsdInput implements InputSource{
     private String resultFormat ;
     private String sparqlQueryTemplate ;
     
-    public SPARQLsdInput(){};
+    public StdSPARQLsdInput(){};
     
-    public SPARQLsdInput(Repository repository, Value source){ 
+    public StdSPARQLsdInput(Repository repository, Value source){ 
         Object endpoint = extractEndpoint(repository, (Resource) source);
         if(endpoint != null)
             this.endpoint = endpoint;
@@ -63,7 +61,7 @@ public class SPARQLsdInput implements InputSource{
      * @param resultFormat
      * @param sparqlQueryTemplate
      */
-    public SPARQLsdInput(Object endpoint, String supportedLanguage, String resultFormat, String sparqlQueryTemplate){
+    public StdSPARQLsdInput(Object endpoint, String supportedLanguage, String resultFormat, String sparqlQueryTemplate){
         this.endpoint = endpoint;
         this.supportedLanguage = supportedLanguage ;
         this.resultFormat = resultFormat ;
