@@ -14,13 +14,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author andimou
  */
-public class ApiProcessor extends AbstractInputProcessor {
+public class ApiProcessor extends AbstractInputProcessor implements InputProcessor {
     
     // Log
     private static final Logger log = LoggerFactory.getLogger(ApiProcessor.class);
     
-    @Override
-    public InputStream getInputStream(TriplesMap triplesMap, String source) {
+    public InputStream getInputStream(String source) {
         InputStream input = null;
 
         try {

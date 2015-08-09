@@ -17,7 +17,6 @@ public class JdbcProcessor extends AbstractInputProcessor{
     
     public JdbcTemplate getJdbcConnection(StdJdbcInputSource mapSource) {        
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        log.info("map source driver " + mapSource.getJdbcDriver());
         dataSource.setDriverClassName(mapSource.getJdbcDriver());
         dataSource.setUrl(mapSource.getJdbcDSN());
         dataSource.setUsername(mapSource.getUsername());

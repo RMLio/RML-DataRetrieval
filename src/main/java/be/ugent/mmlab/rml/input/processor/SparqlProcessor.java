@@ -1,6 +1,5 @@
 package be.ugent.mmlab.rml.input.processor;
 
-import be.ugent.mmlab.rml.model.TriplesMap;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -19,8 +18,8 @@ public class SparqlProcessor extends AbstractInputProcessor {
     private static final Logger log = LoggerFactory.getLogger(SparqlProcessor.class);
     
     //TODO:change or move function to AbstractInputProcessor
-    @Override
-    public InputStream getInputStream(TriplesMap triplesMap, String source) {
+    
+    public InputStream getInputStream(String source) {
         InputStream input = null;
 
         try {

@@ -20,6 +20,7 @@ public class LocalFileExtractor extends AbstractInputExtractor {
     // Log
     private static final Logger log = LoggerFactory.getLogger(LocalFileExtractor.class);
     
+    //TODO: Change extractInput to Value instead of Resource
     public Set<InputSource> extractInput(Repository repository, String source) {
         Set<InputSource> inputSources = new HashSet<InputSource>();
         

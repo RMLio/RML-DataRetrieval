@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.processor;
 
-import be.ugent.mmlab.rml.model.TriplesMap;
+import be.ugent.mmlab.rml.model.InputSource;
 import java.io.InputStream;
 
 /**
@@ -16,6 +16,6 @@ public interface InputProcessor {
      * @param triplesMap
      * @return
      */
-    public InputStream getInputStream(TriplesMap triplesMap, String source);
+    public InputStream getInputStream(InputSource source);
 
 }
