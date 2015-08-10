@@ -1,7 +1,7 @@
 package be.ugent.mmlab.rml.input.extractor.concrete;
 
 import be.ugent.mmlab.rml.model.InputSource;
-import be.ugent.mmlab.rml.input.extractor.AbstractInputExtractor;
+import be.ugent.mmlab.rml.input.extractor.StdSourceExtractor;
 import be.ugent.mmlab.rml.input.model.std.ApiInputSource;
 import be.ugent.mmlab.rml.vocabulary.HydraVocabulary;
 import java.util.HashSet;
@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
+import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.openrdf.repository.Repository;
@@ -23,7 +24,7 @@ import org.openrdf.repository.RepositoryResult;
  *
  * @author andimou
  */
-public class ApiExtractor extends AbstractInputExtractor {
+public class ApiExtractor extends StdSourceExtractor {//implements SourceExtractor {
     
     // Log
     private static final Logger log = LoggerFactory.getLogger(ApiExtractor.class);
@@ -32,7 +33,7 @@ public class ApiExtractor extends AbstractInputExtractor {
 
 
     @Override
-    public Set<InputSource> extractInput(Repository repository, Resource resource) {
+    public Set<InputSource> extractSource(Repository repository, Value resource) {
         Set<InputSource> inputSources = new HashSet<InputSource>();
         try {
             RepositoryConnection connection = repository.getConnection();
@@ -40,7 +41,7 @@ public class ApiExtractor extends AbstractInputExtractor {
             URI predicate = vf.createURI(
                     HydraVocabulary.HYDRA_NAMESPACE + HydraVocabulary.HydraTerm.TEMPLATE);
             RepositoryResult<Statement> statements =
-                    connection.getStatements(resource, predicate, resource, true);
+                    connection.getStatements((Resource) resource, predicate, resource, true);
 
             while (statements.hasNext()) {
                 inputSources.add(

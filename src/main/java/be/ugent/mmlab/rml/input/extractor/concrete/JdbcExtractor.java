@@ -1,7 +1,7 @@
 package be.ugent.mmlab.rml.input.extractor.concrete;
 
 import be.ugent.mmlab.rml.model.InputSource;
-import be.ugent.mmlab.rml.input.extractor.AbstractInputExtractor;
+import be.ugent.mmlab.rml.input.extractor.AbstractSourceExtractor;
 import be.ugent.mmlab.rml.input.std.StdJdbcInputSource;
 import be.ugent.mmlab.rml.vocabulary.D2RQVocabulary;
 import be.ugent.mmlab.rml.vocabulary.D2RQVocabulary.D2RQTerm;
@@ -10,6 +10,7 @@ import java.util.Set;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
+import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author andimou
  */
-public class JdbcExtractor extends AbstractInputExtractor {
+public class JdbcExtractor extends AbstractSourceExtractor {
 
     // Log
     private static final Logger log = LoggerFactory.getLogger(ApiExtractor.class);
@@ -36,20 +37,20 @@ public class JdbcExtractor extends AbstractInputExtractor {
         
     
     @Override
-    public Set<InputSource> extractInput(Repository repository, Resource resource) {
+    public Set<InputSource> extractSource(Repository repository, Value value) {
         Set<InputSource> inputSources = new HashSet<InputSource>();
 
-        String jdbcDSN = extractJdbcTerm(repository, resource, D2RQTerm.JDBCDSN);
-        String jdbcDriver = extractJdbcTerm(repository, resource, D2RQTerm.JDBCDRIVER);
-        String username = extractJdbcTerm(repository, resource, D2RQTerm.USERNAME);
-        String password = extractJdbcTerm(repository, resource, D2RQTerm.PASSWORD);
+        String jdbcDSN = extractJdbcTerm(repository, value, D2RQTerm.JDBCDSN);
+        String jdbcDriver = extractJdbcTerm(repository, value, D2RQTerm.JDBCDRIVER);
+        String username = extractJdbcTerm(repository, value, D2RQTerm.USERNAME);
+        String password = extractJdbcTerm(repository, value, D2RQTerm.PASSWORD);
         InputSource source = new StdJdbcInputSource(jdbcDSN, jdbcDriver, username, password);
         inputSources.add(source);
 
         return inputSources;
     }
     
-    private String extractJdbcTerm(Repository repository, Resource resource, D2RQTerm term){
+    private String extractJdbcTerm(Repository repository, Value resource, D2RQTerm term){
         String value = null;
         
         try {
@@ -60,7 +61,7 @@ public class JdbcExtractor extends AbstractInputExtractor {
                         D2RQVocabulary.D2RQ_NAMESPACE + term);
             
             RepositoryResult<Statement> statements =
-                    connection.getStatements(resource, predicate, null, true);
+                    connection.getStatements((Resource) resource, predicate, null, true);
             
             while (statements.hasNext()) {
                 value = statements.next().getObject().stringValue();

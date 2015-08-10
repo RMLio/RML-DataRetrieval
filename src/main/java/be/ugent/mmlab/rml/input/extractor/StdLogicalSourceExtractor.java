@@ -26,11 +26,11 @@ import org.openrdf.repository.RepositoryResult;
  *
  * @author andimou
  */
-public class StdInputExtractor implements InputExtractor {
-    
+public class StdLogicalSourceExtractor implements LogicalSourceExtractor {
+
     // Log
-    private static final Logger log = LoggerFactory.getLogger(StdInputExtractor.class);
-    
+    private static final Logger log = LoggerFactory.getLogger(StdLogicalSourceExtractor.class);
+
     /**
      *
      * @param rmlMappingGraph
@@ -38,14 +38,14 @@ public class StdInputExtractor implements InputExtractor {
      */
     public Map<Resource, InputSource> extractInputResources(Repository repository) {
         Map<Resource, InputSource> inputResources = new HashMap<Resource, InputSource>();
-        
+
         RepositoryResult<Statement> statements = getInputResources(repository);
 
         inputResources = putInputResources(repository, statements, inputResources);
 
         return inputResources;
     }
-    
+
     /**
      *
      * @param rmlMappingGraph
@@ -54,14 +54,14 @@ public class StdInputExtractor implements InputExtractor {
     protected RepositoryResult<Statement> getInputResources(Repository repository) {
         RepositoryResult<Statement> inputStatements = null;
         try {
-            
+
             RepositoryConnection connection = repository.getConnection();
             ValueFactory vf = connection.getValueFactory();
-            
+
             URI p = vf.createURI(RMLVocabulary.RML_NAMESPACE
                     + RMLVocabulary.RMLTerm.SOURCE);
             inputStatements = connection.getStatements(null, p, null, true);
-            
+
             connection.close();
 
         } catch (RepositoryException ex) {
@@ -69,7 +69,7 @@ public class StdInputExtractor implements InputExtractor {
         }
         return inputStatements;
     }
-    
+
     /**
      *
      * @param rmlMappingGraph
@@ -98,7 +98,7 @@ public class StdInputExtractor implements InputExtractor {
                                 //input source
                                 new StdInputSource(triplesMapsStatements.next().getObject().stringValue()));
                     } catch (Exception ex) {
-                        log.error(StdInputExtractor.class.getName() + ex);
+                        log.error(StdLogicalSourceExtractor.class.getName() + ex);
                     }
                 }
             }
@@ -107,7 +107,7 @@ public class StdInputExtractor implements InputExtractor {
         }
         return inputResources;
     }
-    
+
     /**
      *
      * @param rmlMappingGraph
@@ -120,24 +120,23 @@ public class StdInputExtractor implements InputExtractor {
         log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + ": "
                 + "Extract Input Resource : "
                 + inputResource.stringValue());
-        
+
         InputSource result = inputResources.get(inputResource);
 
         // Extract TriplesMap properties
         Set<TriplesMap> triplesMaps =
                 extractTriplesMaps(repository, inputResource);
-        
+
         // Add triples maps
         for (TriplesMap triplesMap : triplesMaps) {
             result.setTriplesMap(triplesMap);
-        }      
+        }
 
         log.info(Thread.currentThread().getStackTrace()[1].getMethodName() + ": "
                 + "Extract of Input source : "
                 + inputResource.stringValue() + " done.");
     }
-    
-    
+
     /**
      *
      * @param rmlMappingGraph
@@ -148,27 +147,27 @@ public class StdInputExtractor implements InputExtractor {
             Repository repository, Resource inputResource) {
         Set<TriplesMap> triplesMaps = new HashSet<TriplesMap>();
         try {
-            TriplesMap triplesMap ;
-            
+            TriplesMap triplesMap;
+
             RepositoryConnection connection = repository.getConnection();
-            
+
             URI p = getTermURI(repository, RMLVocabulary.RMLTerm.LOGICAL_SOURCE);
-            RepositoryResult<Statement> triplesMapStatements = 
+            RepositoryResult<Statement> triplesMapStatements =
                     connection.getStatements(null, p, inputResource, true);
-            
-            while(triplesMapStatements.hasNext()){
+
+            while (triplesMapStatements.hasNext()) {
                 triplesMap = new StdTriplesMap(
                         null, null, null, triplesMapStatements.next().getSubject().stringValue());
                 triplesMaps.add(triplesMap);
             }
             connection.close();
-            
+
         } catch (RepositoryException ex) {
             log.error("RepositoryException " + ex);
         }
         return triplesMaps;
     }
-    
+
     /**
      *
      * @param rmlMappingGraph
@@ -178,20 +177,20 @@ public class StdInputExtractor implements InputExtractor {
      * @return
      */
     protected RepositoryResult<Statement> getStatements(
-            Repository repository, Enum term,  Resource resource, TriplesMap triplesMap){
+            Repository repository, Enum term, Resource resource, TriplesMap triplesMap) {
         RepositoryResult<Statement> statements = null;
         try {
             URI p = getTermURI(repository, term);
             RepositoryConnection connection = repository.getConnection();
             statements = connection.getStatements(resource, p, null, true);
-            
+
             connection.close();
         } catch (RepositoryException ex) {
             log.error("RepositoryException " + ex);
         }
         return statements;
     }
-    
+
     /**
      *
      * @param rmlMappingGraph
@@ -203,12 +202,13 @@ public class StdInputExtractor implements InputExtractor {
 
         if (term instanceof RMLVocabulary.RMLTerm) {
             namespace = RMLVocabulary.RML_NAMESPACE;
-        } else if ((term instanceof R2RMLVocabulary.R2RMLTerm)) 
+        } else if ((term instanceof R2RMLVocabulary.R2RMLTerm)) {
             namespace = R2RMLVocabulary.R2RML_NAMESPACE;
-        else
+        } else {
             log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": "
                     + term + " is not valid.");
-        
+        }
+
         RepositoryConnection connection;
         URI uri = null;
         try {
@@ -220,11 +220,10 @@ public class StdInputExtractor implements InputExtractor {
             log.error("RepositoryException " + ex);
         }
         return uri;
-    }  
+    }
 
     @Override
-    public Set<InputSource> extractInput(Repository repository, Resource resource) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-}
-
+    public Set<InputSource> extractSources(Repository repository, Resource resource) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

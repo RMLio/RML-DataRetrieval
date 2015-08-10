@@ -10,7 +10,7 @@ import org.openrdf.repository.Repository;
  *
  * @author andimou
  */
-public interface InputExtractor {
+public interface LogicalSourceExtractor {
 
     /**
      *
@@ -23,5 +23,5 @@ public interface InputExtractor {
      *
      * @return
      */
-    public Set<InputSource> extractInput(Repository repository, Resource resource);
+    public Set<InputSource> extractSources(Repository repository, Resource resource);
 }

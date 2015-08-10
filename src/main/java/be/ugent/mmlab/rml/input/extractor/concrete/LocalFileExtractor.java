@@ -1,13 +1,13 @@
 package be.ugent.mmlab.rml.input.extractor.concrete;
 
 import be.ugent.mmlab.rml.model.InputSource;
-import be.ugent.mmlab.rml.input.extractor.AbstractInputExtractor;
+import be.ugent.mmlab.rml.input.extractor.AbstractSourceExtractor;
 import be.ugent.mmlab.rml.input.model.std.LocalFileSource;
 import java.util.HashSet;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openrdf.model.Resource;
+import org.openrdf.model.Value;
 import org.openrdf.repository.Repository;
 
 /**
@@ -15,7 +15,7 @@ import org.openrdf.repository.Repository;
  *
  * @author andimou
  */
-public class LocalFileExtractor extends AbstractInputExtractor {
+public class LocalFileExtractor extends AbstractSourceExtractor {
     
     // Log
     private static final Logger log = LoggerFactory.getLogger(LocalFileExtractor.class);
@@ -30,8 +30,12 @@ public class LocalFileExtractor extends AbstractInputExtractor {
     }
 
     @Override
-    public Set<InputSource> extractInput(Repository repository, Resource resource) {
-        return null;
+    public Set<InputSource> extractSource(Repository repository, Value value) {
+        Set<InputSource> inputSources = new HashSet<InputSource>();
+        
+        inputSources.add(new LocalFileSource(value.stringValue(), value.stringValue()));
+        
+        return inputSources;
     }
      
 }

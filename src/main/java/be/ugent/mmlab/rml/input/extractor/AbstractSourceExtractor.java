@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author andimou
  */
-abstract public class AbstractInputExtractor implements InputExtractor {
+abstract public class AbstractSourceExtractor implements SourceExtractor {
 
     // Log
-    private static final Logger log = LoggerFactory.getLogger(AbstractInputExtractor.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractSourceExtractor.class);
 
     
     /**
