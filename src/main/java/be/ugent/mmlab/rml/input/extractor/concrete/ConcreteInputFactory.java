@@ -47,6 +47,7 @@ public class ConcreteInputFactory implements InputFactory {
                 String sourceType = inputStatements.next().getObject().stringValue().toString();
                 log.debug("source type " + sourceType);
 
+                //TODO:Change the followings not to compare with String
                 switch (sourceType) {
                     case ("http://www.w3.org/ns/hydra/core#APIDocumentation"):
                         log.debug("Source described with Hydra Core vocabulary.");
