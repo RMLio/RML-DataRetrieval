@@ -24,7 +24,7 @@ public class AbstractInputProcessor implements InputProcessor {
         //String source = triplesMap.getLogicalSource().getInputSource().getSource();
         
         InputStream inputStream = getInputStream(
-                triplesMap.getLogicalSource().getInputSource());
+                triplesMap.getLogicalSource().getSource());
         return inputStream;
     }
     

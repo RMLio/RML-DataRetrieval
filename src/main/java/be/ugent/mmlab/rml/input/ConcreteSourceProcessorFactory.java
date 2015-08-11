@@ -1,12 +1,12 @@
 package be.ugent.mmlab.rml.input;
 
-import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.mapdochandler.extraction.concrete.SourceExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.DcatExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.HydraExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.JdbcExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.LocalFileExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.SparqlExtractor;
+import be.ugent.mmlab.rml.model.Source;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,16 +20,16 @@ import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.RepositoryResult;
 
 /**
- * RML - Data Retrieval Handler : ConcreteInputFactory
+ * RML - Data Retrieval Handler : ConcreteSourceProcessorFactory
  *
  * @author andimou
  */
-public class ConcreteSourceFactory implements SourceFactory {
+public class ConcreteSourceProcessorFactory implements SourceProcessorFactory {
     
     // Log
-    private static final Logger log = LoggerFactory.getLogger(ConcreteSourceFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(ConcreteSourceProcessorFactory.class);
     
-    public SourceExtractor createSourceExtractor(Repository repository, Value value) {
+    public SourceExtractor createSourceProcessor(Repository repository, Source source) {
         SourceExtractor sourceExtractor = null;
         try {
             
@@ -74,8 +74,8 @@ public class ConcreteSourceFactory implements SourceFactory {
         return sourceExtractor;
     }
     
-    public Set<InputSource> chooseSource(Repository repository, Value value) {
-        Set<InputSource> inputSources = null;
+    public Set<Source> chooseSource(Repository repository, Value value) {
+        Set<Source> inputSources = null;
         try {
             SourceExtractor input;
             RepositoryConnection connection = repository.getConnection();

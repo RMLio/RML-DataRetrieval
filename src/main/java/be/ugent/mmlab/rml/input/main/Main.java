@@ -2,7 +2,6 @@ package be.ugent.mmlab.rml.input.main;
 
 import be.ugent.mmlab.rml.input.SourceFactory;
 import be.ugent.mmlab.rml.input.config.DataRetrievalHandlerConfiguration;
-import java.util.logging.Level;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;

@@ -1,5 +1,6 @@
 package be.ugent.mmlab.rml.input.extractor;
 
+import be.ugent.mmlab.rml.mapdochandler.extraction.concrete.SourceExtractor;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
