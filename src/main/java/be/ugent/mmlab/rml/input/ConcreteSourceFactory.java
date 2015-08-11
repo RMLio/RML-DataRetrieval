@@ -2,7 +2,7 @@ package be.ugent.mmlab.rml.input;
 
 import be.ugent.mmlab.rml.model.InputSource;
 import be.ugent.mmlab.rml.input.extractor.SourceExtractor;
-import be.ugent.mmlab.rml.input.extractor.concrete.ApiExtractor;
+import be.ugent.mmlab.rml.input.extractor.concrete.HydraExtractor;
 import be.ugent.mmlab.rml.input.extractor.concrete.DcatExtractor;
 import be.ugent.mmlab.rml.input.extractor.concrete.JdbcExtractor;
 import be.ugent.mmlab.rml.input.extractor.concrete.LocalFileExtractor;
@@ -46,11 +46,10 @@ public class ConcreteSourceFactory implements SourceFactory {
                 String sourceType = inputStatements.next().getObject().stringValue().toString();
                 log.debug("source type " + sourceType);
 
-                //TODO:Change the followings not to compare with String
                 switch (sourceType) {
                     case ("http://www.w3.org/ns/hydra/core#APIDocumentation"):
                         log.debug("Source described with Hydra Core vocabulary.");
-                        sourceExtractor = new ApiExtractor();
+                        sourceExtractor = new HydraExtractor();
                         break;
                     case ("http://www.w3.org/ns/dcat#Distribution"):
                         log.debug("Source described with DCAT vocabulary.");
@@ -99,7 +98,7 @@ public class ConcreteSourceFactory implements SourceFactory {
                 switch (sourceType) {
                     case ("http://www.w3.org/ns/hydra/core#APIDocumentation"):
                         log.debug("Source described with Hydra Core vocabulary.");
-                        input = new ApiExtractor();
+                        input = new HydraExtractor();
                         inputSources = input.extractSource(repository, (Resource) value);
                         break;
                     case ("http://www.w3.org/ns/dcat#Distribution"):

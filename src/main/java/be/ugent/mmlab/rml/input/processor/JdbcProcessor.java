@@ -2,7 +2,6 @@ package be.ugent.mmlab.rml.input.processor;
 
 import be.ugent.mmlab.rml.input.std.StdJdbcInputSource;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;

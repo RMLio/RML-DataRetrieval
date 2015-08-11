@@ -1,6 +1,5 @@
 package be.ugent.mmlab.rml.input.processor;
 
-import be.ugent.mmlab.rml.model.TriplesMap;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;

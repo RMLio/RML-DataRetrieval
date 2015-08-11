@@ -21,7 +21,7 @@ public interface LogicalSourceExtractor {
     //InputStream getInputStream (String source, TriplesMap triplesMap);
     /**
      *
-     * @return
+     * @return Set<InputSource>
      */
     public Set<InputSource> extractSources(Repository repository, Resource resource);
 }

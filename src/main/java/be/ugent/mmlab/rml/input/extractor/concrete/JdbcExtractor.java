@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class JdbcExtractor extends AbstractSourceExtractor {
 
     // Log
-    private static final Logger log = LoggerFactory.getLogger(ApiExtractor.class);
+    private static final Logger log = LoggerFactory.getLogger(JdbcExtractor.class);
 
     @Override
     public Set<String> extractStringTemplate(String source) {

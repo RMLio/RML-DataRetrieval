@@ -24,10 +24,10 @@ import org.openrdf.repository.RepositoryResult;
  *
  * @author andimou
  */
-public class ApiExtractor extends StdSourceExtractor {//implements SourceExtractor {
+public class HydraExtractor extends StdSourceExtractor {
     
     // Log
-    private static final Logger log = LoggerFactory.getLogger(ApiExtractor.class);
+    private static final Logger log = LoggerFactory.getLogger(HydraExtractor.class);
     // Value factory
     private static ValueFactory vf = new ValueFactoryImpl();
 
