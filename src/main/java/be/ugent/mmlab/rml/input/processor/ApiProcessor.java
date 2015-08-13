@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author andimou
  */
-public class ApiProcessor extends AbstractInputProcessor implements InputProcessor {
+public class ApiProcessor extends AbstractInputProcessor implements SourceProcessor {
     
     // Log
     private static final Logger log = LoggerFactory.getLogger(ApiProcessor.class);

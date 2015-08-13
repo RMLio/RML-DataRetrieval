@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.processor;
 
-import be.ugent.mmlab.rml.model.InputSource;
+import be.ugent.mmlab.rml.model.Source;
 import be.ugent.mmlab.rml.model.TriplesMap;
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,9 +43,9 @@ public class LocalFileProcessor extends AbstractInputProcessor {
     }
     
     @Override
-    public InputStream getInputStream(InputSource inputSource) {
+    public InputStream getInputStream(Source inputSource) {
         InputStream input = null;
-        String source = inputSource.getSource();
+        String source = inputSource.getTemplate();
         try {
             File file = new File(new File(source).getAbsolutePath());
 
@@ -80,11 +80,13 @@ public class LocalFileProcessor extends AbstractInputProcessor {
                 File file = new File(new File(source).getAbsolutePath());
 
                 if (!file.exists()) {
-                    if (LocalFileProcessor.class.getResource(triplesMap.getLogicalSource().getSource()) == null) {
-                        source = triplesMap.getLogicalSource().getSource();
+                    if (LocalFileProcessor.class.
+                            getResource(triplesMap.getLogicalSource().getSource().getTemplate()) == null) {
+                        source = triplesMap.getLogicalSource().getSource().getTemplate();
                         file = new File(new File(source).getAbsolutePath());
                     } else {
-                        source = LocalFileProcessor.class.getResource(triplesMap.getLogicalSource().getSource()).getFile();
+                        source = LocalFileProcessor.class.
+                                getResource(triplesMap.getLogicalSource().getSource().getTemplate()).getFile();
                         file = new File(new File(source).getCanonicalPath());
                     }
                     if (!file.exists()) {

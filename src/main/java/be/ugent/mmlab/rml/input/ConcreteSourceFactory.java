@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input;
 
-import be.ugent.mmlab.rml.model.InputSource;
+import be.ugent.mmlab.rml.model.Source;
 import be.ugent.mmlab.rml.mapdochandler.extraction.concrete.SourceExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.DcatExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.HydraExtractor;
@@ -74,8 +74,8 @@ public class ConcreteSourceFactory implements SourceFactory {
         return sourceExtractor;
     }
     
-    public Set<InputSource> chooseSource(Repository repository, Value value) {
-        Set<InputSource> inputSources = null;
+    public Set<Source> chooseSource(Repository repository, Value value) {
+        Set<Source> inputSources = null;
         try {
             SourceExtractor input;
             RepositoryConnection connection = repository.getConnection();

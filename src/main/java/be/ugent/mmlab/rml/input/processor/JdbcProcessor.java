@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.processor;
 
-import be.ugent.mmlab.rml.input.std.StdJdbcInputSource;
+import be.ugent.mmlab.rml.model.source.std.StdJdbcSource;
 import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class JdbcProcessor extends AbstractInputProcessor{
     // Log
     private static final Logger log = LoggerFactory.getLogger(JdbcProcessor.class);
     
-    public JdbcTemplate getJdbcConnection(StdJdbcInputSource mapSource) {   
+    public JdbcTemplate getJdbcConnection(StdJdbcSource mapSource) {   
         JdbcTemplate jdbcTemplate = null;
         log.info("mapSource " + mapSource);
         try {
