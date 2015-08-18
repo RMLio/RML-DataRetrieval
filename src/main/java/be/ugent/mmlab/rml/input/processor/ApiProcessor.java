@@ -1,5 +1,6 @@
 package be.ugent.mmlab.rml.input.processor;
 
+import be.ugent.mmlab.rml.model.Source;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -18,6 +19,24 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     // Log
     private static final Logger log = LoggerFactory.getLogger(ApiProcessor.class);
     
+    @Override
+    public InputStream getInputStream(Source source) {
+        InputStream input = null;     
+
+        try {
+            URL url = new URL(source.getTemplate());
+            log.debug("URL " + url);
+            input = url.openStream();
+
+        } catch (MalformedURLException ex) {
+            log.error("Malformed URL Exception: " + ex);
+        } catch (IOException ex) {
+            log.error("Malformed URL Exception: " + ex);
+        }
+
+        return input;
+    }
+    
     public InputStream getInputStream(String source) {
         InputStream input = null;
 
@@ -28,9 +47,9 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
                 input = new URL(source).openStream();
             }
         } catch (MalformedURLException ex) {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+            log.error("Malformed URL Exception: " + ex);
         } catch (IOException ex) {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+            log.error("Malformed URL Exception: " + ex);
         }
 
         return input;

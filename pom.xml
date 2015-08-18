@@ -96,11 +96,6 @@
             <version>${slf4j.version}</version> 
         </dependency>
         <dependency>
-            <groupId>org.openrdf.sesame</groupId>  
-            <artifactId>sesame-model</artifactId>  
-            <version>${sesame.version}</version> 
-        </dependency>
-        <dependency>
             <groupId>be.ugent.mmlab.rml</groupId>
             <artifactId>RML-Model</artifactId>
             <version>${project.version}</version>

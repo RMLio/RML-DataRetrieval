@@ -29,45 +29,12 @@ public class AbstractInputProcessor implements SourceProcessor {
         return null;
     }
     
-    /*@Override
-    public InputStream getInputStream(TriplesMap triplesMap, String source) {
-        InputStream inputStream = null;
-        InputProcessor inputProcessor;
-        
-        switch (triplesMap.getLogicalSource().getInputSource().getClass().getSimpleName()) {
-            case ("LocalFileSource"):
-                log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " 
-                        + "Local File");
-                inputProcessor = new LocalFileProcessor();
-                inputStream = inputProcessor.getInputStream(source);
-                break;
-            case ("ApiInputSource"):
-                inputProcessor = new ApiProcessor();
-                inputStream = inputProcessor.getInputStream(source);
-                break;
-            case ("SparqlSdInputSource"):
-                inputProcessor = new SparqlProcessor();
-                inputStream = inputProcessor.getInputStream(source);
-                break;
-            case ("JdbcInputSource"):
-                JdbcProcessor jdbcProcessor = new JdbcProcessor();
-                StdJdbcInputSource mapSource = null;
-                JdbcTemplate jdcTemplate = jdbcProcessor.getJdbcConnection(mapSource);
-                //inputStream = inputProcessor.getInputStream(triplesMap, source);
-                break;
-            default:
-                log.error("Not identified input");
-        }
-        return inputStream;
-    }*/
-    
     @Override
     public InputStream getInputStream(Source source) {
         InputStream inputStream = null;
         SourceProcessor inputProcessor;
-        //String source = inputSource.getSource();
         log.debug("type of source " + source.getClass().getSimpleName());
-        //switch (triplesMap.getLogicalSource().getInputSource().getClass().getSimpleName()) {
+
         switch (source.getClass().getSimpleName()) {
             case ("StdLocalFileSource"):
                 log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " 
@@ -75,18 +42,18 @@ public class AbstractInputProcessor implements SourceProcessor {
                 inputProcessor = new LocalFileProcessor();
                 inputStream = inputProcessor.getInputStream(source);
                 break;
-            case ("StdApiInputSource"):
-                log.debug("API Input Source.");
+            case ("StdApiSource"):
+                log.debug("API Data Source.");
                 inputProcessor = new ApiProcessor();
                 inputStream = inputProcessor.getInputStream(source);
                 break;
             case ("StdSparqlSdInputSource"):
-                log.debug("SPARQL-SD Input Source.");
+                log.debug("SPARQL-SD Data Source.");
                 inputProcessor = new SparqlProcessor();
                 inputStream = inputProcessor.getInputStream(source);
                 break;
             case ("StdStdJdbcInputSource"):
-                log.debug("JDBC Input Source.");
+                log.debug("JDBC Data Source.");
                 JdbcProcessor jdbcProcessor = new JdbcProcessor();
                 //StdJdbcInputSource mapSource = null;
                 JdbcTemplate jdcTemplate = jdbcProcessor.

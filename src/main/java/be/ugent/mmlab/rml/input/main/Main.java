@@ -1,6 +1,5 @@
 package be.ugent.mmlab.rml.input.main;
 
-import be.ugent.mmlab.rml.input.SourceFactory;
 import be.ugent.mmlab.rml.input.config.DataRetrievalHandlerConfiguration;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
@@ -32,7 +31,7 @@ public class Main {
                 map_doc = commandLine.getOptionValue("m", null);
             }
             
-            SourceFactory inputFactory ;
+            
 
         } catch (ParseException ex) {
             log.error("Parse Exception s" + ex);
