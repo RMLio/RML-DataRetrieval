@@ -1,8 +1,6 @@
 package be.ugent.mmlab.rml.input.std;
 
-import be.ugent.mmlab.rml.model.InputSource;
-import be.ugent.mmlab.rml.model.TriplesMap;
-import java.util.Set;
+import be.ugent.mmlab.rml.model.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openrdf.model.Resource;
@@ -23,7 +21,7 @@ import org.openrdf.repository.RepositoryResult;
  *
  * @author andimou
  */
-public class StdSPARQLsdInput implements InputSource{
+public class StdSPARQLsdInput implements Source{
     // Log
     private static final Logger log = LoggerFactory.getLogger(StdSPARQLsdInput.class);
     // Value factory
@@ -206,23 +204,12 @@ public class StdSPARQLsdInput implements InputSource{
     }
 
     @Override
-    public void setTriplesMap(TriplesMap triplesMap) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
-
-    @Override
-    public Set<TriplesMap> getTriplesMap() {
+    public void setTemplate(String template) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String getSource() {
+    public String getTemplate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void setSource(String source) {
-        
-    }
-
 }

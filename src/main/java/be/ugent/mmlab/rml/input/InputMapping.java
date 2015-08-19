@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input;
 
-import be.ugent.mmlab.rml.model.InputSource;
+import be.ugent.mmlab.rml.model.Source;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -10,14 +10,14 @@ import java.util.HashSet;
  * @author andimou
  */
 public class InputMapping {
-    private Collection<InputSource> inputSources;
+    private Collection<Source> inputSources;
 
     /**
      *
      * @param inputSources
      */
-    public InputMapping(Collection<InputSource> inputSources) {
-        this.inputSources = new HashSet<InputSource>();
+    public InputMapping(Collection<Source> inputSources) {
+        this.inputSources = new HashSet<Source>();
         this.inputSources.addAll(inputSources);
     }
     
@@ -25,7 +25,7 @@ public class InputMapping {
      *
      * @return
      */
-    public Collection<InputSource> getInputSources() {
+    public Collection<Source> getInputSources() {
         return inputSources;
     }
     

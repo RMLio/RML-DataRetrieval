@@ -22,7 +22,7 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     @Override
     public InputStream getInputStream(Source source) {
         InputStream input = null;     
-
+        //TODO: Change the following with Spring
         try {
             URL url = new URL(source.getTemplate());
             log.debug("URL " + url);
