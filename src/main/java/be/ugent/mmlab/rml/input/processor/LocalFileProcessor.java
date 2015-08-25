@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,8 @@ public class LocalFileProcessor extends AbstractInputProcessor {
     }
     
     @Override
-    public InputStream getInputStream(Source inputSource) {
+    public InputStream getInputStream(
+            Source inputSource, Map<String, String> parameters) {
         InputStream input = null;
         String source = inputSource.getTemplate();
         try {

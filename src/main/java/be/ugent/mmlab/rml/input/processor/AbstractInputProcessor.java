@@ -4,6 +4,7 @@ import be.ugent.mmlab.rml.model.Source;
 import be.ugent.mmlab.rml.model.TriplesMap;
 import be.ugent.mmlab.rml.model.source.std.StdJdbcSource;
 import java.io.InputStream;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,7 +31,8 @@ public class AbstractInputProcessor implements SourceProcessor {
     }
     
     @Override
-    public InputStream getInputStream(Source source) {
+    public InputStream getInputStream(
+            Source source, Map<String, String> parameters) {
         InputStream inputStream = null;
         SourceProcessor inputProcessor;
         log.debug("type of source " + source.getClass().getSimpleName());
@@ -40,17 +42,17 @@ public class AbstractInputProcessor implements SourceProcessor {
                 log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " 
                         + "Local File");
                 inputProcessor = new LocalFileProcessor();
-                inputStream = inputProcessor.getInputStream(source);
+                inputStream = inputProcessor.getInputStream(source, parameters);
                 break;
             case ("StdApiSource"):
                 log.debug("API Data Source.");
                 inputProcessor = new ApiProcessor();
-                inputStream = inputProcessor.getInputStream(source);
+                inputStream = inputProcessor.getInputStream(source, parameters);
                 break;
             case ("StdSparqlSdInputSource"):
                 log.debug("SPARQL-SD Data Source.");
                 inputProcessor = new SparqlProcessor();
-                inputStream = inputProcessor.getInputStream(source);
+                inputStream = inputProcessor.getInputStream(source, parameters);
                 break;
             case ("StdStdJdbcInputSource"):
                 log.debug("JDBC Data Source.");

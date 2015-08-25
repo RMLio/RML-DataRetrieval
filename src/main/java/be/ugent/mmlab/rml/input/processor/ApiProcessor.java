@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,18 +21,27 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     private static final Logger log = LoggerFactory.getLogger(ApiProcessor.class);
     
     @Override
-    public InputStream getInputStream(Source source) {
-        InputStream input = null;     
+    public InputStream getInputStream(Source source, Map<String, String> parameters) {
+        InputStream input = null;
+        String sourceTemplate;
+
+        TemplateProcessor templateProcessor = new TemplateProcessor();
+        if (parameters != null) {
+            sourceTemplate = templateProcessor.
+                    processTemplate(source.getTemplate(), parameters);
+        } else {
+            sourceTemplate = source.getTemplate();
+        }
+
         //TODO: Change the following with Spring
         try {
-            URL url = new URL(source.getTemplate());
-            log.debug("URL " + url);
+            URL url = new URL(sourceTemplate);
             input = url.openStream();
 
         } catch (MalformedURLException ex) {
             log.error("Malformed URL Exception: " + ex);
         } catch (IOException ex) {
-            log.error("Malformed URL Exception: " + ex);
+            log.error("IO Exception : " + ex);
         }
 
         return input;
