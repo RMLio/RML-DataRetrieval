@@ -1,5 +1,6 @@
 package be.ugent.mmlab.rml.input.processor;
 
+import be.ugent.mmlab.rml.model.LogicalSource;
 import be.ugent.mmlab.rml.model.Source;
 import be.ugent.mmlab.rml.model.TriplesMap;
 import be.ugent.mmlab.rml.model.source.std.StdJdbcSource;
@@ -32,29 +33,32 @@ public class AbstractInputProcessor implements SourceProcessor {
     
     @Override
     public InputStream getInputStream(
-            Source source, Map<String, String> parameters) {
+            LogicalSource logicalSource, Map<String, String> parameters) {
         InputStream inputStream = null;
         SourceProcessor inputProcessor;
+        Source source = logicalSource.getSource();
         log.debug("type of source " + source.getClass().getSimpleName());
 
         switch (source.getClass().getSimpleName()) {
             case ("StdLocalFileSource"):
-                log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " 
-                        + "Local File");
+                log.debug("Local File as Source");
                 inputProcessor = new LocalFileProcessor();
-                inputStream = inputProcessor.getInputStream(source, parameters);
+                inputStream = inputProcessor.
+                        getInputStream(logicalSource, parameters);
                 break;
             case ("StdApiSource"):
                 log.debug("API Data Source.");
                 inputProcessor = new ApiProcessor();
-                inputStream = inputProcessor.getInputStream(source, parameters);
+                inputStream = inputProcessor.
+                        getInputStream(logicalSource, parameters);
                 break;
-            case ("StdSparqlSdInputSource"):
-                log.debug("SPARQL-SD Data Source.");
+            case ("StdSparqlEndpointSource"):
+                log.debug("SPARQL Endpoint as Data Source.");
                 inputProcessor = new SparqlProcessor();
-                inputStream = inputProcessor.getInputStream(source, parameters);
+                inputStream = inputProcessor.
+                        getInputStream(logicalSource, parameters);
                 break;
-            case ("StdStdJdbcInputSource"):
+            case ("StdStdJdbcSource"):
                 log.debug("JDBC Data Source.");
                 JdbcProcessor jdbcProcessor = new JdbcProcessor();
                 //StdJdbcInputSource mapSource = null;

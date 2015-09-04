@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.processor;
 
-import be.ugent.mmlab.rml.model.Source;
+import be.ugent.mmlab.rml.model.LogicalSource;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -18,6 +18,6 @@ public interface SourceProcessor {
      * @return
      */
     public InputStream getInputStream(
-            Source source, Map<String, String> parameters);
+            LogicalSource logicalSource, Map<String, String> parameters);
 
 }

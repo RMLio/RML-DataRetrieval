@@ -21,16 +21,28 @@ public class TemplateProcessor {
         for (Map.Entry<String, String> parameter : parameters.entrySet()) {
             String expression = parameter.getKey();
             String replacement = parameter.getValue();
-
+            
             log.error("Template processing...");
-            if (expression.contains("[")) {
+            
+            template = template.replaceAll("\\n", "").replaceAll(" +", " ");
+
+            /*if (expression.contains("[")) {
                 expression = expression.replaceAll("\\[", "").replaceAll("\\]", "");
                 template = template.replaceAll("\\[", "").replaceAll("\\]", "");
-            }
+            }*/
             try {
                 //TODO: replace the following with URIbuilder
                 template = template.replaceAll(
                         "\\{" + Pattern.quote(expression) + "\\}",
+                        URLEncoder.encode(replacement, "UTF-8")
+                        .replaceAll("\\+", "%20")
+                        .replaceAll("\\%21", "!")
+                        .replaceAll("\\%27", "'")
+                        .replaceAll("\\%28", "(")
+                        .replaceAll("\\%29", ")")
+                        .replaceAll("\\%7E", "~"));
+                template = template.replaceAll(
+                        "%%" + Pattern.quote(expression) + "%%",
                         URLEncoder.encode(replacement, "UTF-8")
                         .replaceAll("\\+", "%20")
                         .replaceAll("\\%21", "!")

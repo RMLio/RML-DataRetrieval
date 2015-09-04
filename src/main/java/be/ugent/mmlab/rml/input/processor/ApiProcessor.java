@@ -1,5 +1,6 @@
 package be.ugent.mmlab.rml.input.processor;
 
+import be.ugent.mmlab.rml.model.LogicalSource;
 import be.ugent.mmlab.rml.model.Source;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,9 +22,11 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     private static final Logger log = LoggerFactory.getLogger(ApiProcessor.class);
     
     @Override
-    public InputStream getInputStream(Source source, Map<String, String> parameters) {
+    public InputStream getInputStream(
+            LogicalSource logicalSource, Map<String, String> parameters) {
         InputStream input = null;
         String sourceTemplate;
+        Source source = logicalSource.getSource();
 
         TemplateProcessor templateProcessor = new TemplateProcessor();
         if (parameters != null) {

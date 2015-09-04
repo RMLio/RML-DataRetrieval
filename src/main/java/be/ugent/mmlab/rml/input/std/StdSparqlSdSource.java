@@ -21,9 +21,9 @@ import org.openrdf.repository.RepositoryResult;
  *
  * @author andimou
  */
-public class StdSPARQLsdInput implements Source{
+public class StdSparqlSdSource implements Source{
     // Log
-    private static final Logger log = LoggerFactory.getLogger(StdSPARQLsdInput.class);
+    private static final Logger log = LoggerFactory.getLogger(StdSparqlSdSource.class);
     // Value factory
     private static ValueFactory vf = new ValueFactoryImpl();
     
@@ -32,9 +32,9 @@ public class StdSPARQLsdInput implements Source{
     private String resultFormat ;
     private String sparqlQueryTemplate ;
     
-    public StdSPARQLsdInput(){};
+    public StdSparqlSdSource(){};
     
-    public StdSPARQLsdInput(Repository repository, Value source){ 
+    public StdSparqlSdSource(Repository repository, Value source){ 
         Object endpoint = extractEndpoint(repository, (Resource) source);
         if(endpoint != null)
             this.endpoint = endpoint;
@@ -59,7 +59,7 @@ public class StdSPARQLsdInput implements Source{
      * @param resultFormat
      * @param sparqlQueryTemplate
      */
-    public StdSPARQLsdInput(Object endpoint, String supportedLanguage, String resultFormat, String sparqlQueryTemplate){
+    public StdSparqlSdSource(Object endpoint, String supportedLanguage, String resultFormat, String sparqlQueryTemplate){
         this.endpoint = endpoint;
         this.supportedLanguage = supportedLanguage ;
         this.resultFormat = resultFormat ;
