@@ -22,7 +22,7 @@ public class TemplateProcessor {
             String expression = parameter.getKey();
             String replacement = parameter.getValue();
             
-            log.error("Template processing...");
+            log.debug("Template processing...");
             
             template = template.replaceAll("\\n", "").replaceAll(" +", " ");
 
