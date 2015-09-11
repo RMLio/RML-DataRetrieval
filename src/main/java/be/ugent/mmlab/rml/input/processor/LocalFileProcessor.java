@@ -49,8 +49,16 @@ public class LocalFileProcessor extends AbstractInputProcessor {
             LogicalSource logicalSource, Map<String, String> parameters) {
         InputStream input = null;
         Source source = logicalSource.getSource();
-        String template = source.getTemplate();
+        String template ;
         try {
+            if (parameters != null) {
+                TemplateProcessor templateProcessor = new TemplateProcessor();
+                template = templateProcessor.
+                        processTemplate(source.getTemplate(), parameters);
+            } else {
+                template = source.getTemplate();
+            }
+            
             File file = new File(new File(template).getAbsolutePath());
 
             if (!file.exists()) {
@@ -62,7 +70,7 @@ public class LocalFileProcessor extends AbstractInputProcessor {
             }
             input = new FileInputStream(file);
         } catch (IOException ex) {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+            log.error("IO Exception: " + ex);
         }
         return input;
     }
