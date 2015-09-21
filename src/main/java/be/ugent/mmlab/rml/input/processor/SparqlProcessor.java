@@ -54,9 +54,9 @@ public class SparqlProcessor extends AbstractInputProcessor {
         
         if (parameters != null) {
             sourceTemplate = templateProcessor.
-                    processTemplate(source.getTemplate(), parameters);
+                    processUriTemplate(source.getTemplate(), parameters);
             query = templateProcessor.
-                    processTemplate(query, parameters);
+                    processUriTemplate(query, parameters);
         } else {
             sourceTemplate = source.getTemplate();
         }

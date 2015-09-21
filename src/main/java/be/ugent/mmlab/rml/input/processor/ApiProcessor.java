@@ -31,7 +31,7 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
         TemplateProcessor templateProcessor = new TemplateProcessor();
         if (parameters != null) {
             sourceTemplate = templateProcessor.
-                    processTemplate(source.getTemplate(), parameters);
+                    processUriTemplate(source.getTemplate(), parameters);
         } else {
             sourceTemplate = source.getTemplate();
         }

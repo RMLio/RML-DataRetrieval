@@ -15,9 +15,10 @@ import org.slf4j.LoggerFactory;
 public class TemplateProcessor {
     
     // Log
-    private static final Logger log = LoggerFactory.getLogger(TemplateProcessor.class);
+    private static final Logger log = 
+            LoggerFactory.getLogger(TemplateProcessor.class);
     
-    public String processTemplate(String template, Map<String, String> parameters) {
+    public String processUriTemplate(String template, Map<String, String> parameters) {
         for (Map.Entry<String, String> parameter : parameters.entrySet()) {
             String expression = parameter.getKey();
             String replacement = parameter.getValue();
@@ -53,6 +54,26 @@ public class TemplateProcessor {
             } catch (UnsupportedEncodingException ex) {
                 log.error("UnsupportedEncodingException " + ex);
             }
+        }
+        return template.toString();
+    }
+    
+    public String processTemplate(String template, Map<String, String> parameters) {
+        for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+            String expression = parameter.getKey();
+            String replacement = parameter.getValue();
+
+            log.debug("Template processing...");
+
+            template = template.replaceAll("\\n", "").replaceAll(" +", " ");
+
+            template = template.replaceAll(
+                    "\\{" + Pattern.quote(expression) + "\\}",
+                    replacement);
+            template = template.replaceAll(
+                    "%%" + Pattern.quote(expression) + "%%",
+                    replacement);
+
         }
         return template.toString();
     }
