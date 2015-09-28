@@ -17,7 +17,8 @@ import org.slf4j.LoggerFactory;
 public class DataRetrievalHandlerConfiguration {
     
     // Log
-    private static final Logger log = LoggerFactory.getLogger(DataRetrievalHandlerConfiguration.class);
+    private static final Logger log =
+            LoggerFactory.getLogger(DataRetrievalHandlerConfiguration.class);
     private static final Options cliOptions = generateCLIOptions();
     
     public static CommandLine parseArguments(String[] args) throws ParseException {

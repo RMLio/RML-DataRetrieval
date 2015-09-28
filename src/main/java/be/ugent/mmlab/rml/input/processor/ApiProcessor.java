@@ -19,7 +19,8 @@ import org.slf4j.LoggerFactory;
 public class ApiProcessor extends AbstractInputProcessor implements SourceProcessor {
     
     // Log
-    private static final Logger log = LoggerFactory.getLogger(ApiProcessor.class);
+    private static final Logger log = 
+            LoggerFactory.getLogger(ApiProcessor.class);
     
     @Override
     public InputStream getInputStream(

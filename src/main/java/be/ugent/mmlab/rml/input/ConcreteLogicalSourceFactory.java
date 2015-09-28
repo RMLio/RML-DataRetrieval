@@ -14,10 +14,13 @@ import org.openrdf.repository.Repository;
 public class ConcreteLogicalSourceFactory implements LogicalSourceFactory {
 
     // Log
-    private static final Logger log = LoggerFactory.getLogger(ConcreteLogicalSourceFactory.class);
+    private static final Logger log = 
+            LoggerFactory.getLogger(ConcreteLogicalSourceFactory.class);
 
-    public LogicalSourceExtractor createLogicalSourceExtractor(Repository repository, Value value) {
-        LogicalSourceExtractor logicalSourceExtractor = new LogicalSourceExtractor();
+    public LogicalSourceExtractor createLogicalSourceExtractor(
+            Repository repository, Value value) {
+        LogicalSourceExtractor logicalSourceExtractor = 
+                new LogicalSourceExtractor();
 
         return logicalSourceExtractor;
     }

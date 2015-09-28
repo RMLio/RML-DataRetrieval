@@ -23,7 +23,8 @@ import org.openrdf.repository.RepositoryResult;
  */
 public class StdSparqlSdSource implements Source{
     // Log
-    private static final Logger log = LoggerFactory.getLogger(StdSparqlSdSource.class);
+    private static final Logger log = 
+            LoggerFactory.getLogger(StdSparqlSdSource.class);
     // Value factory
     private static ValueFactory vf = new ValueFactoryImpl();
     
@@ -59,7 +60,8 @@ public class StdSparqlSdSource implements Source{
      * @param resultFormat
      * @param sparqlQueryTemplate
      */
-    public StdSparqlSdSource(Object endpoint, String supportedLanguage, String resultFormat, String sparqlQueryTemplate){
+    public StdSparqlSdSource(Object endpoint, String supportedLanguage, 
+            String resultFormat, String sparqlQueryTemplate){
         this.endpoint = endpoint;
         this.supportedLanguage = supportedLanguage ;
         this.resultFormat = resultFormat ;
@@ -75,14 +77,14 @@ public class StdSparqlSdSource implements Source{
         try {
             RepositoryConnection connection = repository.getConnection();
 
-            //vf.createURI("http://www.w3.org/1999/02/22-rdf-syntax-ns#" + "type")
             RepositoryResult<Statement> source = 
-                    connection.getStatements((Resource) statement.getObject(), RDF.TYPE, null, true);
+                    connection.getStatements(
+                    (Resource) statement.getObject(), RDF.TYPE, null, true);
             
             connection.close();
 
         } catch (RepositoryException ex) {
-            log.error("RepositoryException " + ex);
+            log.error("Repository Exception " + ex);
         }
         
     }

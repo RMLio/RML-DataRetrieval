@@ -20,7 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SparqlProcessor extends AbstractInputProcessor {
     // Log
-    private static final Logger log = LoggerFactory.getLogger(SparqlProcessor.class);
+    private static final Logger log = 
+            LoggerFactory.getLogger(SparqlProcessor.class);
     
     //TODO:change or move function to AbstractInputProcessor
     
@@ -28,15 +29,16 @@ public class SparqlProcessor extends AbstractInputProcessor {
         InputStream input = null;
 
         try {
-            HttpURLConnection con = (HttpURLConnection) new URL(source).openConnection();
+            HttpURLConnection con = 
+                    (HttpURLConnection) new URL(source).openConnection();
             con.setRequestMethod("HEAD");
             if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 input = new URL(source).openStream();
             }
         } catch (MalformedURLException ex) {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+            log.error("Malformed URL Exception: " + ex);
         } catch (IOException ex) {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+            log.error("IO Exception: " + ex);
         }
 
         return input;
@@ -74,7 +76,6 @@ public class SparqlProcessor extends AbstractInputProcessor {
         //TODO: Change the following with Spring
         try {
             URL url = new URL(sourceTemplate);
-            log.debug("url " + url);
             input = url.openStream();
 
         } catch (MalformedURLException ex) {

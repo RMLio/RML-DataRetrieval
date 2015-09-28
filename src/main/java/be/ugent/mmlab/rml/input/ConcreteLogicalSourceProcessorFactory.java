@@ -12,7 +12,6 @@ import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.JdbcExtractor
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.LocalFileExtractor;
 import be.ugent.mmlab.rml.mapdochandler.extraction.source.concrete.SparqlExtractor;
 import be.ugent.mmlab.rml.model.Source;
-import be.ugent.mmlab.rml.model.TriplesMap;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +77,7 @@ public class ConcreteLogicalSourceProcessorFactory implements SourceProcessorFac
                 connection.close();
             }
         } catch (RepositoryException ex) {
-            log.error("RepositoryException " + ex);
+            log.error("Repository Exception " + ex);
         }
         return sourceProcessor;
     }

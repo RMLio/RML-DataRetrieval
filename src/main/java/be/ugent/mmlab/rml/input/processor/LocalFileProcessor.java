@@ -21,7 +21,8 @@ import org.slf4j.LoggerFactory;
 public class LocalFileProcessor extends AbstractInputProcessor {
     
     // Log
-    private static final Logger log = LoggerFactory.getLogger(LocalFileProcessor.class);
+    private static final Logger log = 
+            LoggerFactory.getLogger(LocalFileProcessor.class);
     
     public InputStream getInputStream(String source) {
         InputStream input = null;
@@ -32,14 +33,12 @@ public class LocalFileProcessor extends AbstractInputProcessor {
                 file = new File(new File(source).getCanonicalPath());
 
                 if (!file.exists()) {
-                    log.error(
-                            Thread.currentThread().getStackTrace()[1].getMethodName() + ": "
-                            + "Input file not found. ");
+                    log.error("Input file not found. ");
                 }
             }
             input = new FileInputStream(file);
         } catch (IOException ex) {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+            log.error("IO Exception: " + ex);
         }
         return input;
     }
@@ -100,18 +99,16 @@ public class LocalFileProcessor extends AbstractInputProcessor {
                         file = new File(new File(source).getCanonicalPath());
                     }
                     if (!file.exists()) {
-                        log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": "
-                                + "Input file not found. ");
+                        log.error("Input file not found. ");
                     }
                 }
                 source = file.toString();
                 //input = new FileInputStream(file);
             } catch (IOException ex) {
-                log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+                log.error("IO Exception: " + ex);
             }
         } else {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " 
-                    + "Input stream was not possible.");
+            log.error("Input stream was not possible.");
             return null;
         }
         return source;
@@ -127,7 +124,7 @@ public class LocalFileProcessor extends AbstractInputProcessor {
             new URL(source);
             return false;
         } catch (MalformedURLException ex) {
-            log.error(Thread.currentThread().getStackTrace()[1].getMethodName() + ": " + ex);
+            log.error("Malformed URL Exception: " + ex);
             return true;
         }
     }
