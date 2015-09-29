@@ -7,12 +7,14 @@ The existing implementation supports different dataset and service descriptions 
 
 The access interfaces supported at the moment are 
 * Dump files 
-* [DCAT](http://www.w3.org/TR/vocab-dcat/) for Data Catalogues
-* [Hydra](http://www.w3.org/ns/hydra/spec/latest/core/) for Web APIs
-* subset of [D2RQ](http://d2rq.org/d2rq-language) for Database Access Interface
-* [SPARQL-SD](http://www.w3.org/TR/sparql11-service-description/) for SPARQL Service
+* [DCAT](http://www.w3.org/TR/vocab-dcat/) for Data Catalogues (RML Data Retrieval considers Dataset and Distribution)
+* [Hydra](http://www.w3.org/ns/hydra/spec/latest/core/) for Web APIs (RML Data Retrieval considers IRI Template and Paged Collection)
+* subset of [D2RQ](http://d2rq.org/d2rq-language) for Database Access Interface (RML Data Retrieval considers Database)
+* [SPARQL-SD](http://www.w3.org/TR/sparql11-service-description/) for SPARQL Service (RML Data Retrieval considers Dataset and Service)
+* [VoID](http://www.w3.org/TR/void/) for accessing RDF Datasets and/or their SPARQL endpoint (RML Data Retrieval considers Dataset and Dataset Description)
+* [CSVW](http://www.w3.org/TR/tabular-metadata/) for CSV files published on the Web (RML Data Retrieval considers Table Dialect Description from CSVW)
 
-Detailed examples of possible descriptions and their alignment with RML can be found at [RML Data Sources] (http://rml.io/RMLdataRetrieval.html)
+Details and examples of possible data source descriptions and their alignment with RML can be found at [RML Data Sources] (http://rml.io/RMLdataRetrieval.html).
 
 Related Publication
 -------------------
