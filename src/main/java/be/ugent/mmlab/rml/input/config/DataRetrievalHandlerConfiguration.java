@@ -30,9 +30,12 @@ public class DataRetrievalHandlerConfiguration {
     private static Options generateCLIOptions() {
         Options cliOptions = new Options();
         
-        cliOptions.addOption("h", "help", false, "show this help message");
-        cliOptions.addOption("m", "mapping document", true, "the URI of the mapping file (required)");
-        cliOptions.addOption("tm", "Triples Map", true, "Triples Map to be processed.");
+        cliOptions.addOption("h", 
+                "help", false, "show this help message");
+        cliOptions.addOption("m", 
+                "mapping document", true, "the URI of the mapping file (required)");
+        cliOptions.addOption("tm", 
+                "Triples Map", true, "Triples Map to be processed.");
         cliOptions.addOption("p", 
                 "arguments to pass if the rml:source of the mapping document is a URI template "
                 + "and requires parameters (they should be comma separated)", true, 

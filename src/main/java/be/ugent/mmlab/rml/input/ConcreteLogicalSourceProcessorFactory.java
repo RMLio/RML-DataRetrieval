@@ -32,7 +32,8 @@ import org.openrdf.repository.RepositoryResult;
 public class ConcreteLogicalSourceProcessorFactory implements SourceProcessorFactory {
     
     // Log
-    private static final Logger log = LoggerFactory.getLogger(ConcreteLogicalSourceProcessorFactory.class);
+    private static final Logger log = 
+            LoggerFactory.getLogger(ConcreteLogicalSourceProcessorFactory.class);
     
     public SourceProcessor createSourceProcessor(Repository repository, Source source) {
         SourceProcessor sourceProcessor = null;

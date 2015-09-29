@@ -62,7 +62,6 @@ public class AbstractInputProcessor implements SourceProcessor {
             case ("StdStdJdbcSource"):
                 log.debug("JDBC Data Source.");
                 JdbcProcessor jdbcProcessor = new JdbcProcessor();
-                //StdJdbcInputSource mapSource = null;
                 JdbcTemplate jdcTemplate = jdbcProcessor.
                         getJdbcConnection((StdJdbcSource) source);
                 break;

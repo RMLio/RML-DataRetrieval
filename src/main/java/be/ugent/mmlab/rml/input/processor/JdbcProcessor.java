@@ -25,9 +25,7 @@ public class JdbcProcessor extends AbstractInputProcessor{
             dataSource.setUrl(mapSource.getJdbcDSN());
             dataSource.setUsername(mapSource.getUsername());
             dataSource.setPassword(mapSource.getPassword());
-            log.debug("Data source was generated");
             dataSource.getConnection();
-            log.debug("Data source was connected");
             jdbcTemplate = new JdbcTemplate(dataSource);
             log.debug("JDBC Template was generated");
             return jdbcTemplate;
