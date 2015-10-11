@@ -1,9 +1,7 @@
 RML Data Retrieval
 ==================
 
-RML Data Retrieval implementation supports the [RML Processor](https://github.com/mmlab/RMLProcessor/) to access and retrieve the data sources.
-
-The existing implementation supports different dataset and service descriptions for data access in RDF.
+RML Data Retrieval considers different dataset and service descriptions and supports the [RML Processor](https://github.com/mmlab/RMLProcessor/) to access and retrieve the data sources based on those descriptions.
 
 The access interfaces supported at the moment are 
 * Dump files 
