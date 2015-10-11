@@ -37,8 +37,19 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
             sourceTemplate = source.getTemplate();
         }
 
-        //TODO: Change the following with Spring
+        //TODO: Spring it
         try {
+            /*HttpURLConnection con = 
+                    (HttpURLConnection) new URL(sourceTemplate).openConnection();
+            con.setRequestMethod("GET");
+            //con.addRequestProperty("Accept", "application/json");
+            //con.setRequestProperty("Accept", "application/json");
+            //con.setRequestProperty( "Content-Type", "application/json" );
+            
+            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                input = con.getInputStream();
+                //input = new URL(sourceTemplate).openStream();
+            }*/
             URL url = new URL(sourceTemplate);
             input = url.openStream();
 
@@ -55,7 +66,8 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
         InputStream input = null;
 
         try {
-            HttpURLConnection con = (HttpURLConnection) new URL(source).openConnection();
+            HttpURLConnection con = 
+                    (HttpURLConnection) new URL(source).openConnection();
             con.setRequestMethod("HEAD");
             if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 input = new URL(source).openStream();
