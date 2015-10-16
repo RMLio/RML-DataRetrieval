@@ -39,19 +39,26 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
 
         //TODO: Spring it
         try {
-            /*HttpURLConnection con = 
+            HttpURLConnection con = 
                     (HttpURLConnection) new URL(sourceTemplate).openConnection();
             con.setRequestMethod("GET");
-            //con.addRequestProperty("Accept", "application/json");
-            //con.setRequestProperty("Accept", "application/json");
-            //con.setRequestProperty( "Content-Type", "application/json" );
-            
+            switch (logicalSource.getReferenceFormulation().toString()) {
+                case "JSONPath":
+                    con.addRequestProperty("Accept", "application/json");
+                    con.setRequestProperty("Content-Type", "application/json");
+                    break;
+                case "XPath":
+                    con.addRequestProperty("Accept", "application/xml");
+                    con.setRequestProperty("Content-Type", "application/xml");
+                    break;
+            }
+                
             if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 input = con.getInputStream();
                 //input = new URL(sourceTemplate).openStream();
-            }*/
-            URL url = new URL(sourceTemplate);
-            input = url.openStream();
+            }
+            //URL url = new URL(sourceTemplate);
+            //input = url.openStream();
 
         } catch (MalformedURLException ex) {
             log.error("Malformed URL Exception: " + ex);
