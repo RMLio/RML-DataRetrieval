@@ -128,4 +128,9 @@ public class LocalFileProcessor extends AbstractInputProcessor {
             return true;
         }
     }
+    
+    @Override
+    public boolean hasNextInputStream(){
+        return false;
+    }
 }

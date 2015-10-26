@@ -35,4 +35,9 @@ public class JdbcProcessor extends AbstractInputProcessor{
         
         return jdbcTemplate;
     }
+    
+    @Override
+    public boolean hasNextInputStream(){
+        return false;
+    }
 }

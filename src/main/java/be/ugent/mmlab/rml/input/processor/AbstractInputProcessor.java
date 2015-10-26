@@ -71,4 +71,9 @@ public class AbstractInputProcessor implements SourceProcessor {
         return inputStream;
     }
     
+    @Override
+    public boolean hasNextInputStream(){
+        return false;
+    }
+    
 }

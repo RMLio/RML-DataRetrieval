@@ -85,4 +85,9 @@ public class SparqlProcessor extends AbstractInputProcessor {
         }
         return input;
     }
+    
+    @Override
+    public boolean hasNextInputStream(){
+        return false;
+    }
 }

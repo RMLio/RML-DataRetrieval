@@ -19,5 +19,7 @@ public interface SourceProcessor {
      */
     public InputStream getInputStream(
             LogicalSource logicalSource, Map<String, String> parameters);
+    
+    public boolean hasNextInputStream();
 
 }

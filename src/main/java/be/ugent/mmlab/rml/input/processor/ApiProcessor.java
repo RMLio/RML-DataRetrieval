@@ -21,21 +21,38 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     // Log
     private static final Logger log = 
             LoggerFactory.getLogger(ApiProcessor.class);
+    private String nextPage = null;
+    
+    private String getInputSource(
+            LogicalSource logicalSource, Map<String, String> parameters) {
+        String sourceTemplate;
+        Source source ;
+        
+        if (nextPage == null) {
+            source = logicalSource.getSource();
+
+            TemplateProcessor templateProcessor = new TemplateProcessor();
+            if (parameters != null) {
+                sourceTemplate = templateProcessor.
+                        processUriTemplate(source.getTemplate(), parameters);
+            } else {
+                sourceTemplate = source.getTemplate();
+            }
+        } else {
+            sourceTemplate = nextPage;
+        }
+        return sourceTemplate;
+    }
     
     @Override
     public InputStream getInputStream(
-            LogicalSource logicalSource, Map<String, String> parameters) {
+            LogicalSource logicalSource, Map<String, String> parameters){
         InputStream input = null;
-        String sourceTemplate;
-        Source source = logicalSource.getSource();
-
-        TemplateProcessor templateProcessor = new TemplateProcessor();
-        if (parameters != null) {
-            sourceTemplate = templateProcessor.
-                    processUriTemplate(source.getTemplate(), parameters);
-        } else {
-            sourceTemplate = source.getTemplate();
-        }
+        boolean flag = false;
+        
+        log.debug("Getting Input source..");
+        String sourceTemplate = getInputSource(logicalSource, parameters);
+        log.info("Mapping " + sourceTemplate + " input source.");
 
         //TODO: Spring it
         try {
@@ -52,13 +69,31 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
                     con.setRequestProperty("Content-Type", "application/xml");
                     break;
             }
-                
+            
+            String rel = con.getHeaderField("Link");
+            if (rel != null) {
+                String[] smths = rel.split(",");
+
+                for (String smth : smths) {
+                    if (smth.contains("http://www.w3.org/ns/hydra/core#nextPage")) {
+                        flag = true;
+                        String[] nextPages = smth.split(";");
+                        for (String np : nextPages) {
+                            if (!np.contains("rel=")) {
+                                nextPage = np;
+                            }
+                        }
+                    }
+                }
+
+                if (flag == false) {
+                    nextPage = null;
+                }
+            }
+
             if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 input = con.getInputStream();
-                //input = new URL(sourceTemplate).openStream();
             }
-            //URL url = new URL(sourceTemplate);
-            //input = url.openStream();
 
         } catch (MalformedURLException ex) {
             log.error("Malformed URL Exception: " + ex);
@@ -82,9 +117,17 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
         } catch (MalformedURLException ex) {
             log.error("Malformed URL Exception: " + ex);
         } catch (IOException ex) {
-            log.error("Malformed URL Exception: " + ex);
+            log.error("IO Exception: " + ex);
         }
 
         return input;
+    }
+    
+    @Override
+    public boolean hasNextInputStream(){
+        if(nextPage != null)
+            return true;
+        else
+            return false;
     }
 }
