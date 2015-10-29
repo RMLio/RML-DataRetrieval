@@ -43,10 +43,8 @@ public class ConcreteLogicalSourceProcessorFactory implements SourceProcessorFac
             
             //TODO: Normally source won't work, it's of another class
             if (source.getClass().getSimpleName().equals("MemLiteral")) {
-                log.debug("Literal-valued Input Source");
                 sourceProcessor = new LocalFileProcessor();
             } else {
-                log.debug("Resource-valued Input Source");
                 //RepositoryResult<Statement> inputStatements =
                 //        connection.getStatements((Resource) value, RDF.TYPE, null, true);
                 //String sourceType = inputStatements.next().getObject().stringValue().toString();
