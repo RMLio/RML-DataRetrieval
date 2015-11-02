@@ -2,6 +2,7 @@ package be.ugent.mmlab.rml.input.processor;
 
 import be.ugent.mmlab.rml.model.LogicalSource;
 import be.ugent.mmlab.rml.model.Source;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -53,46 +54,56 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
         log.debug("Getting Input source..");
         String sourceTemplate = getInputSource(logicalSource, parameters);
         log.info("Mapping " + sourceTemplate + " input source.");
+        HttpURLConnection con;
 
         //TODO: Spring it
         try {
-            HttpURLConnection con = 
-                    (HttpURLConnection) new URL(sourceTemplate).openConnection();
-            con.setRequestMethod("GET");
-            switch (logicalSource.getReferenceFormulation().toString()) {
-                case "JSONPath":
-                    con.addRequestProperty("Accept", "application/json");
-                    con.setRequestProperty("Content-Type", "application/json");
-                    break;
-                case "XPath":
-                    con.addRequestProperty("Accept", "application/xml");
-                    con.setRequestProperty("Content-Type", "application/xml");
-                    break;
-            }
-            
-            String rel = con.getHeaderField("Link");
-            if (rel != null) {
-                String[] smths = rel.split(",");
-
-                for (String smth : smths) {
-                    if (smth.contains("http://www.w3.org/ns/hydra/core#nextPage")) {
-                        flag = true;
-                        String[] nextPages = smth.split(";");
-                        for (String np : nextPages) {
-                            if (!np.contains("rel=")) {
-                                nextPage = np;
-                            }
-                        }
+            if (sourceTemplate.startsWith("/")) {
+                ///upnormal but mainly to catch CSVW descriptions of local files
+                input = new FileInputStream(sourceTemplate);
+                return input;
+            } else {
+                con = (HttpURLConnection) new URL(sourceTemplate).openConnection();
+                con.setRequestMethod("GET");
+                if (logicalSource.getReferenceFormulation() != null) {
+                    switch (logicalSource.getReferenceFormulation().toString()) {
+                        case "JSONPath":
+                            con.addRequestProperty("Accept", "application/json");
+                            con.setRequestProperty("Content-Type", "application/json");
+                            break;
+                        case "XPath":
+                            con.addRequestProperty("Accept", "application/xml");
+                            con.setRequestProperty("Content-Type", "application/xml");
+                            break;
                     }
                 }
 
-                if (flag == false) {
-                    nextPage = null;
-                }
-            }
+                String rel = con.getHeaderField("Link");
+                if (rel != null) {
+                    String[] smths = rel.split(",");
 
-            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                input = con.getInputStream();
+                    for (String smth : smths) {
+                        if (smth.contains("http://www.w3.org/ns/hydra/core#nextPage")) {
+                            flag = true;
+                            String[] nextPages = smth.split(";");
+                            for (String np : nextPages) {
+                                if (!np.contains("rel=")) {
+                                    nextPage = np;
+                                }
+                            }
+                        }
+                    }
+
+                    if (flag == false) {
+                        nextPage = null;
+                    }
+                }
+
+                if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    input = con.getInputStream();
+                } else {
+                    log.debug("Response Code " + con.getResponseCode());
+                }
             }
 
         } catch (MalformedURLException ex) {
