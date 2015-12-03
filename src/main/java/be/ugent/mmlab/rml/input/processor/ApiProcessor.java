@@ -22,7 +22,7 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     // Log
     private static final Logger log = 
             LoggerFactory.getLogger(ApiProcessor.class);
-    private String nextPage = null;
+    private String nextPage = null, lastPage = null;
     
     private String getInputSource(
             LogicalSource logicalSource, Map<String, String> parameters) {
@@ -89,6 +89,19 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
                             for (String np : nextPages) {
                                 if (!np.contains("rel=")) {
                                     nextPage = np;
+                                }
+                            }
+                        }
+                        //TODO: Change this to read last page only one time
+                        if (smth.contains("http://www.w3.org/ns/hydra/core#lastPage")) {
+                            flag = true;
+                            String[] lastPages = smth.split(";");
+                            for (String lp : lastPages) {
+                                if (!lp.contains("rel=")) {
+                                    lastPage = lp;
+                                    if(sourceTemplate.equals(lastPage)){
+                                        nextPage = null;
+                                    }
                                 }
                             }
                         }
