@@ -49,12 +49,11 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     public InputStream getInputStream(
             LogicalSource logicalSource, Map<String, String> parameters){
         InputStream input = null;
-        boolean flag = false;
+        //boolean flag = false;
         
         log.debug("Getting Input source..");
         String sourceTemplate = getInputSource(logicalSource, parameters);
         log.info("Mapping " + sourceTemplate + " input source.");
-        HttpURLConnection con;
 
         //TODO: Spring it
         try {
@@ -63,68 +62,88 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
                 input = new FileInputStream(sourceTemplate);
                 return input;
             } else {
-                con = (HttpURLConnection) new URL(sourceTemplate).openConnection();
-                con.setRequestMethod("GET");
-                if (logicalSource.getReferenceFormulation() != null) {
-                    switch (logicalSource.getReferenceFormulation().toString()) {
-                        case "JSONPath":
-                            con.addRequestProperty("Accept", "application/json");
-                            con.setRequestProperty("Content-Type", "application/json");
-                            break;
-                        case "XPath":
-                            con.addRequestProperty("Accept", "application/xml");
-                            con.setRequestProperty("Content-Type", "application/xml");
-                            break;
-                    }
-                }
-
-                String rel = con.getHeaderField("Link");
-                if (rel != null) {
-                    String[] smths = rel.split(",");
-
-                    for (String smth : smths) {
-                        if (smth.contains("http://www.w3.org/ns/hydra/core#nextPage")) {
-                            flag = true;
-                            String[] nextPages = smth.split(";");
-                            for (String np : nextPages) {
-                                if (!np.contains("rel=")) {
-                                    nextPage = np;
-                                }
-                            }
-                        }
-                        //TODO: Change this to read last page only one time
-                        if (smth.contains("http://www.w3.org/ns/hydra/core#lastPage")) {
-                            flag = true;
-                            String[] lastPages = smth.split(";");
-                            for (String lp : lastPages) {
-                                if (!lp.contains("rel=")) {
-                                    lastPage = lp;
-                                    if(sourceTemplate.equals(lastPage)){
-                                        nextPage = null;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (flag == false) {
-                        nextPage = null;
-                    }
-                }
-
-                if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    input = con.getInputStream();
-                } else {
-                    log.debug("Response Code " + con.getResponseCode());
-                }
+                input = setUpConnection(sourceTemplate, logicalSource);
             }
 
-        } catch (MalformedURLException ex) {
-            log.error("Malformed URL Exception: " + ex);
         } catch (IOException ex) {
             log.error("IO Exception : " + ex);
         }
 
+        return input;
+    }
+    
+    protected InputStream setUpConnection(
+            String sourceTemplate, LogicalSource logicalSource) {
+        boolean flag = false;
+        InputStream input = null;
+        try {
+            HttpURLConnection con;
+            
+            con = (HttpURLConnection) new URL(sourceTemplate).openConnection();
+            con.setRequestMethod("GET");
+            if (logicalSource.getReferenceFormulation() != null) {
+                switch (logicalSource.getReferenceFormulation().toString()) {
+                    case "JSONPath":
+                        con.addRequestProperty("Accept", "application/json");
+                        con.setRequestProperty("Content-Type", "application/json");
+                        break;
+                    case "XPath":
+                        //Custom for DBLP endpoint only
+                        if (logicalSource.getSource().getTemplate().contains("dblp")) {
+                            con.addRequestProperty("Accept", "application/json");
+                            con.setRequestProperty("Content-Type", "application/json");
+                        }
+                        else{
+                        con.addRequestProperty("Accept", "application/xml");
+                        con.setRequestProperty("Content-Type", "application/xml");}
+                        break;
+                }
+            }
+
+            String rel = con.getHeaderField("Link");
+            if (rel != null) {
+                String[] smths = rel.split(",");
+
+                for (String smth : smths) {
+                    if (smth.contains("http://www.w3.org/ns/hydra/core#nextPage")) {
+                        flag = true;
+                        String[] nextPages = smth.split(";");
+                        for (String np : nextPages) {
+                            if (!np.contains("rel=")) {
+                                nextPage = np;
+                            }
+                        }
+                    }
+                    //TODO: Change this to read last page only one time
+                    if (smth.contains("http://www.w3.org/ns/hydra/core#lastPage")) {
+                        flag = true;
+                        String[] lastPages = smth.split(";");
+                        for (String lp : lastPages) {
+                            if (!lp.contains("rel=")) {
+                                lastPage = lp;
+                                if (sourceTemplate.equals(lastPage)) {
+                                    nextPage = null;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (flag == false) {
+                    nextPage = null;
+                }
+            }
+
+            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                input = con.getInputStream();
+            } else {
+                log.debug("Response Code " + con.getResponseCode());
+            }
+        } catch (MalformedURLException ex) {
+            log.error("Malformed URL Exception " + ex);
+        } catch (IOException ex) {
+            log.error("IO Exception " + ex);
+        }
         return input;
     }
     

@@ -18,13 +18,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author andimou
  */
-public class SparqlProcessor extends AbstractInputProcessor {
+public class SparqlProcessor extends ApiProcessor {
     // Log
     private static final Logger log = 
             LoggerFactory.getLogger(SparqlProcessor.class);
     
     //TODO:change or move function to AbstractInputProcessor
     
+    @Override
     public InputStream getInputStream(String source) {
         InputStream input = null;
 
@@ -67,22 +68,14 @@ public class SparqlProcessor extends AbstractInputProcessor {
         try {
             query = URLEncoder.encode(query.trim(), "UTF-8");
             sourceTemplate = sourceTemplate 
-                    + "?query=" + query 
-                    + "&format=application%2Fsparql-results%2Bjson";
+                    + "?query=" + query ;
+            log.debug("sourceTemplate " + sourceTemplate);
         } catch (UnsupportedEncodingException ex) {
             log.error("Unsupported Encoding Exception " + ex);
         }
+        
+        input = setUpConnection(sourceTemplate, logicalSource);
 
-        //TODO: Change the following with Spring
-        try {
-            URL url = new URL(sourceTemplate);
-            input = url.openStream();
-
-        } catch (MalformedURLException ex) {
-            log.error("Malformed URL Exception: " + ex);
-        } catch (IOException ex) {
-            log.error("IO Exception : " + ex);
-        }
         return input;
     }
     
