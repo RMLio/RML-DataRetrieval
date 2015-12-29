@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>be.ugent.mmlab.rml</groupId>
-    <artifactId>RML-DataRetrieval</artifactId>
+    <artifactId>RML-DataRetrievalHandler</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>RML - Data Retrieval</name>
+    <name>RML - Data Retrieval Handler</name>
     <url>http://github.org/rmlio/rml-dataretrieval</url>
 
     <properties>
