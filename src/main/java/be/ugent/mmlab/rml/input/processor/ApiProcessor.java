@@ -72,6 +72,7 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
         return input;
     }
     
+    //TODO: Spring it!
     protected InputStream setUpConnection(
             String sourceTemplate, LogicalSource logicalSource) {
         boolean flag = false;
@@ -82,22 +83,9 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
             con = (HttpURLConnection) new URL(sourceTemplate).openConnection();
             con.setRequestMethod("GET");
             if (logicalSource.getReferenceFormulation() != null) {
-                switch (logicalSource.getReferenceFormulation().toString()) {
-                    case "JSONPath":
-                        con.addRequestProperty("Accept", "application/json");
-                        con.setRequestProperty("Content-Type", "application/json");
-                        break;
-                    case "XPath":
-                        //Custom for DBLP endpoint only
-                        if (logicalSource.getSource().getTemplate().contains("dblp")) {
-                            con.addRequestProperty("Accept", "application/json");
-                            con.setRequestProperty("Content-Type", "application/json");
-                        }
-                        else{
-                        con.addRequestProperty("Accept", "application/xml");
-                        con.setRequestProperty("Content-Type", "application/xml");}
-                        break;
-                }
+                String referenceFormulation = 
+                        logicalSource.getReferenceFormulation().toString();
+                con = setUpHeaders(referenceFormulation, con);
             }
 
             String rel = con.getHeaderField("Link");
@@ -137,14 +125,58 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
             if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 input = con.getInputStream();
             } else {
-                log.debug("Response Code " + con.getResponseCode());
+                if(con.getResponseCode() == HttpURLConnection.HTTP_INTERNAL_ERROR){
+                    Thread.sleep(6000);
+                    input = con.getInputStream();
+                }
             }
         } catch (MalformedURLException ex) {
             log.error("Malformed URL Exception " + ex);
         } catch (IOException ex) {
             log.error("IO Exception " + ex);
+        } catch (InterruptedException ex) {
+            log.error("Interrupted exception " + ex);
         }
         return input;
+    }
+    
+    //TODO: Spring it!
+    private HttpURLConnection setUpHeaders(
+            String referenceFormulation, HttpURLConnection con) {
+        switch (this.getClass().getSimpleName()) {
+            case "ApiProcessor":
+                log.debug("Setting Headers for API Processor...");
+                switch (referenceFormulation) {
+                    case "JSONPath":
+                        con.addRequestProperty("Accept", "application/json");
+                        con.setRequestProperty("Content-Type", "application/json");
+                        break;
+                    case "XPath":
+                        con.addRequestProperty("Accept", "application/xml");
+                        con.setRequestProperty("Content-Type", "application/xml"); //}
+                        break;
+                }
+                break;
+            case "SparqlProcessor":
+                log.debug("Setting Headers for SPARQL Processor...");
+                switch (referenceFormulation) {
+                    case "JSONPath":
+                        con.addRequestProperty("Accept", "application/sparql-results+json");
+                        con.setRequestProperty("Content-Type", "application/sparql-results+json");
+                        break;
+                    case "XPath":
+                        con.addRequestProperty("Accept", "application/sparql-results+xml");
+                        con.setRequestProperty("Content-Type", "application/sparql-results+xml"); //}
+                        break;
+                    default:
+                        log.debug("No Headers for SPARQL Processor.");
+                        
+                }
+                break;
+            default:
+                log.debug("Headers were not set up properly.");
+        }
+        return con;
     }
     
     public InputStream getInputStream(String source) {

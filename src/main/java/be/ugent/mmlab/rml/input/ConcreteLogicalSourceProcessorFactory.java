@@ -33,7 +33,8 @@ public class ConcreteLogicalSourceProcessorFactory implements SourceProcessorFac
     
     // Log
     private static final Logger log = 
-            LoggerFactory.getLogger(ConcreteLogicalSourceProcessorFactory.class);
+            LoggerFactory.getLogger(
+            ConcreteLogicalSourceProcessorFactory.class.getSimpleName());
     
     public SourceProcessor createSourceProcessor(Repository repository, Source source) {
         SourceProcessor sourceProcessor = null;

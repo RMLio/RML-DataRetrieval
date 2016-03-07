@@ -22,7 +22,7 @@ public class LocalFileProcessor extends AbstractInputProcessor {
     
     // Log
     private static final Logger log = 
-            LoggerFactory.getLogger(LocalFileProcessor.class);
+            LoggerFactory.getLogger(LocalFileProcessor.class.getSimpleName());
     
     public InputStream getInputStream(String source) {
         InputStream input = null;
@@ -57,9 +57,7 @@ public class LocalFileProcessor extends AbstractInputProcessor {
             } else {
                 template = source.getTemplate();
             }
-            
-            File file = new File(new File(template).getAbsolutePath());
-
+            File file = new File(template);
             if (!file.exists()) {
                 file = new File(new File(template).getCanonicalPath());
 
@@ -103,7 +101,6 @@ public class LocalFileProcessor extends AbstractInputProcessor {
                     }
                 }
                 source = file.toString();
-                //input = new FileInputStream(file);
             } catch (IOException ex) {
                 log.error("IO Exception: " + ex);
             }
