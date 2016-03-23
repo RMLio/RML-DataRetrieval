@@ -16,7 +16,7 @@ public class TemplateProcessor {
     
     // Log
     private static final Logger log = 
-            LoggerFactory.getLogger(TemplateProcessor.class);
+            LoggerFactory.getLogger(TemplateProcessor.class.getSimpleName());
     
     public String processUriTemplate(String template, Map<String, String> parameters) {
         for (Map.Entry<String, String> parameter : parameters.entrySet()) {
@@ -32,25 +32,30 @@ public class TemplateProcessor {
                 template = template.replaceAll("\\[", "").replaceAll("\\]", "");
             }*/
             try {
-                //TODO: replace the following with URIbuilder
-                template = template.replaceAll(
-                        "\\{" + Pattern.quote(expression) + "\\}",
-                        URLEncoder.encode(replacement, "UTF-8")
-                        .replaceAll("\\+", "%20")
-                        .replaceAll("\\%21", "!")
-                        .replaceAll("\\%27", "'")
-                        .replaceAll("\\%28", "(")
-                        .replaceAll("\\%29", ")")
-                        .replaceAll("\\%7E", "~"));
-                template = template.replaceAll(
-                        "%%" + Pattern.quote(expression) + "%%",
-                        URLEncoder.encode(replacement, "UTF-8")
-                        .replaceAll("\\+", "%20")
-                        .replaceAll("\\%21", "!")
-                        .replaceAll("\\%27", "'")
-                        .replaceAll("\\%28", "(")
-                        .replaceAll("\\%29", ")")
-                        .replaceAll("\\%7E", "~"));
+                if (replacement.trim().startsWith("http://")) {
+                    template = template.replaceAll(
+                            "\\{" + Pattern.quote(expression) + "\\}", replacement.trim());
+                } else {
+                    //TODO: replace the following with URIbuilder
+                    template = template.replaceAll(
+                            "\\{" + Pattern.quote(expression) + "\\}",
+                            URLEncoder.encode(replacement, "UTF-8")
+                            .replaceAll("\\+", "%20")
+                            .replaceAll("\\%21", "!")
+                            .replaceAll("\\%27", "'")
+                            .replaceAll("\\%28", "(")
+                            .replaceAll("\\%29", ")")
+                            .replaceAll("\\%7E", "~"));
+                    template = template.replaceAll(
+                            "%%" + Pattern.quote(expression) + "%%",
+                            URLEncoder.encode(replacement, "UTF-8")
+                            .replaceAll("\\+", "%20")
+                            .replaceAll("\\%21", "!")
+                            .replaceAll("\\%27", "'")
+                            .replaceAll("\\%28", "(")
+                            .replaceAll("\\%29", ")")
+                            .replaceAll("\\%7E", "~"));
+                }
             } catch (UnsupportedEncodingException ex) {
                 log.error("UnsupportedEncodingException " + ex);
             }
