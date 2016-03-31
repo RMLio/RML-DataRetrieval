@@ -55,17 +55,19 @@ public class JdbcProcessor extends AbstractInputProcessor{
     @Override
     public InputStream getInputStream(
             LogicalSource logicalSource, Map<String, String> parameters){
+        Connection conn = null;
         InputStream input = null;
+        JdbcTemplate jdcTemplate = null;
         Source source = logicalSource.getSource();
-        JdbcTemplate jdcTemplate = 
-                        getJdbcConnection((StdJdbcSource) source);
+        jdcTemplate = getJdbcConnection((StdJdbcSource) source);
+        
         try {
-            Connection conn = jdcTemplate.getDataSource().getConnection();
             String table = logicalSource.getTableName();
             //TODO: Make it decide between tables and sql queries
             String sql = "SELECT * FROM " + table + " ;";
+            conn = jdcTemplate.getDataSource().getConnection();
             if (rs == null) {
-               PreparedStatement ps =
+                PreparedStatement ps =
                         conn.prepareStatement(sql, Statement.KEEP_CURRENT_RESULT);
                 rs = ps.executeQuery();
             }
@@ -115,8 +117,9 @@ public class JdbcProcessor extends AbstractInputProcessor{
             if (!rs.isClosed()) {
                 return true;
             } 
-            else
+            else{
                 rs.close();
+            }
         } catch (SQLException ex) {
             log.error("SQLException " + ex);
         }
