@@ -21,7 +21,7 @@ public class ApiProcessor extends AbstractInputProcessor implements SourceProces
     
     // Log
     private static final Logger log = 
-            LoggerFactory.getLogger(ApiProcessor.class);
+            LoggerFactory.getLogger(ApiProcessor.class.getSimpleName());
     private String nextPage = null, lastPage = null;
     
     private String getInputSource(
