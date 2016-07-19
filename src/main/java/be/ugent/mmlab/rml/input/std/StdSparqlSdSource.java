@@ -36,21 +36,10 @@ public class StdSparqlSdSource implements Source{
     public StdSparqlSdSource(){};
     
     public StdSparqlSdSource(Repository repository, Value source){ 
-        Object endpoint = extractEndpoint(repository, (Resource) source);
-        if(endpoint != null)
-            this.endpoint = endpoint;
-        
-        String value = extractSupportedLanguage(repository, (Resource) source);
-        if(value != null)
-            this.supportedLanguage = value;
-        
-        value = extractResultFormat(repository, (Resource) source);
-        if(value != null)
-            this.resultFormat = value;
-        
-        value = extractSparqlQueryTemplate(repository, (Resource) source);
-        if(value != null)
-            this.supportedLanguage = value;
+        this.endpoint = extractEndpoint(repository, (Resource) source);
+        this.supportedLanguage = extractSupportedLanguage(repository, (Resource) source);
+        this.resultFormat = extractResultFormat(repository, (Resource) source);
+        this.sparqlQueryTemplate = extractSparqlQueryTemplate(repository, (Resource) source);
     };
     
     /**
