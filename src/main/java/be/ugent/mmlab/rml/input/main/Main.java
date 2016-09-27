@@ -28,7 +28,7 @@ public class Main {
 
     // Log
     static Logger log = LoggerFactory.getLogger(
-            Main_depr.class.getPackage().toString());
+            Main.class.getPackage().toString());
 
     public static void main(String[] args) {
 
