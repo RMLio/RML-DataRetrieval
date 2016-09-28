@@ -1,5 +1,7 @@
 package be.ugent.mmlab.rml.input.main;
 
+import be.ugent.mmlab.rml.input.be.ugent.mmlab.rml.output.CsvWriter;
+import be.ugent.mmlab.rml.input.processor.JdbcProcessor;
 import be.ugent.mmlab.rml.logicalsourcehandler.configuration.LogicalSourceConfiguration;
 import be.ugent.mmlab.rml.input.ConcreteLogicalSourceProcessorFactory;
 import be.ugent.mmlab.rml.input.processor.SourceProcessor;
@@ -15,10 +17,8 @@ import org.eclipse.rdf4j.rio.RDFFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.sql.ResultSet;
 import java.util.Map;
 
 /**
@@ -35,6 +35,7 @@ public class Main {
         CommandLine commandLine;
         String outputFile = null;
         String map_doc = null;
+        String format = null;
         StdRMLMappingFactory mappingFactory = new StdRMLMappingFactory();
 
         log.info("=================================================");
@@ -54,6 +55,9 @@ public class Main {
             }
             if (commandLine.hasOption("m")) {
                 map_doc = commandLine.getOptionValue("m", null);
+            }
+            if (commandLine.hasOption("f")) {
+                format = commandLine.getOptionValue("f", null);
             }
 
             log.info("========================================");
@@ -81,17 +85,33 @@ public class Main {
                     logicalSourceProcessorFactory.
                             createSourceProcessor(triplesMap.getLogicalSource().getSource());
             Map<String, String> parameters = null;
-            InputStream input = inputProcessor.getInputStream(
-                    triplesMap.getLogicalSource(), parameters);
+            InputStream input;
+            log.debug("processor " + inputProcessor.getClass().getSimpleName());
+            if(format != null && inputProcessor.getClass().getSimpleName().equals("JdbcProcessor")) {
+                CsvWriter csv = new CsvWriter();
+                JdbcProcessor jdbcInputProcessor = (JdbcProcessor) inputProcessor;
+                ResultSet resultSet = jdbcInputProcessor.getResultSet(triplesMap.getLogicalSource(),parameters);
+                csv.writeHashMapToCsv(resultSet,outputFile);
+                //log.debug("output string " + outputString);
+                //input = new ByteArrayInputStream( outputString.getBytes() );
+            }
+            else {
+                input = inputProcessor.getInputStream(
+                        triplesMap.getLogicalSource(), parameters);
+                OutputStream output = new FileOutputStream(outputFile);
+                IOUtils.copy(input,output);
+                output.close();
+            }
 
-            OutputStream output = new FileOutputStream(outputFile);
-            IOUtils.copy(input,output);
-            output.close();
+
+
 
         } catch (ParseException e) {
             log.error("Parse Exception " + e);
         } catch (IOException e) {
             log.error("IO Exception " + e);
+        } catch (Exception e) {
+            log.error("Exception " + e);
         }
 
 
