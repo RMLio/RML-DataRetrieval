@@ -1,6 +1,6 @@
 package be.ugent.mmlab.rml.input.main;
 
-import be.ugent.mmlab.rml.input.be.ugent.mmlab.rml.output.CsvWriter;
+import be.ugent.mmlab.rml.output.CsvWriter;
 import be.ugent.mmlab.rml.input.processor.JdbcProcessor;
 import be.ugent.mmlab.rml.logicalsourcehandler.configuration.LogicalSourceConfiguration;
 import be.ugent.mmlab.rml.input.ConcreteLogicalSourceProcessorFactory;
