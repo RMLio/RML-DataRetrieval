@@ -3,18 +3,18 @@ package be.ugent.mmlab.rml.input.std;
 import be.ugent.mmlab.rml.model.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openrdf.model.Resource;
-import org.openrdf.model.Statement;
-import org.openrdf.model.URI;
-import org.openrdf.model.Value;
-import org.openrdf.model.ValueFactory;
-import org.openrdf.model.impl.ValueFactoryImpl;
-import org.openrdf.model.vocabulary.RDF;
-import org.openrdf.model.vocabulary.SD;
-import org.openrdf.repository.Repository;
-import org.openrdf.repository.RepositoryConnection;
-import org.openrdf.repository.RepositoryException;
-import org.openrdf.repository.RepositoryResult;
+import org.eclipse.rdf4j.model.Resource;
+import org.eclipse.rdf4j.model.Statement;
+import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.ValueFactory;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.model.vocabulary.RDF;
+import org.eclipse.rdf4j.model.vocabulary.SD;
+import org.eclipse.rdf4j.repository.Repository;
+import org.eclipse.rdf4j.repository.RepositoryConnection;
+import org.eclipse.rdf4j.repository.RepositoryException;
+import org.eclipse.rdf4j.repository.RepositoryResult;
 
 /**
  * RML - Data Retrieval : SPARQLsdInput
@@ -26,7 +26,7 @@ public class StdSparqlSdSource implements Source{
     private static final Logger log = 
             LoggerFactory.getLogger(StdSparqlSdSource.class);
     // Value factory
-    private static ValueFactory vf = new ValueFactoryImpl();
+    private static ValueFactory vf = SimpleValueFactory.getInstance();
     
     private Object endpoint;
     private String supportedLanguage ; 
@@ -59,7 +59,6 @@ public class StdSparqlSdSource implements Source{
     
     /**
      *
-     * @param rmlMappingGraph
      * @param statement
      */
     public void extract (Repository repository, Statement statement) {
@@ -112,7 +111,6 @@ public class StdSparqlSdSource implements Source{
     
     /**
      *
-     * @param rmlMappingGraph
      * @param source
      * @return
      */
@@ -120,7 +118,7 @@ public class StdSparqlSdSource implements Source{
         RepositoryResult<Statement> statements = null;
         try {
             RepositoryConnection connection = repository.getConnection();
-            URI p = vf.createURI("http://www.w3.org/TR/sparql-service-description#endpoint");
+            IRI p = vf.createIRI("http://www.w3.org/TR/sparql-service-description#endpoint");
             statements = connection.getStatements(source, p, null, true);
             
             connection.close();
@@ -133,7 +131,6 @@ public class StdSparqlSdSource implements Source{
     
     /**
      *
-     * @param rmlMappingGraph
      * @param source
      * @return
      */
@@ -153,7 +150,6 @@ public class StdSparqlSdSource implements Source{
     
     /**
      *
-     * @param rmlMappingGraph
      * @param source
      * @return
      */
@@ -173,7 +169,6 @@ public class StdSparqlSdSource implements Source{
     
     /**
      *
-     * @param rmlMappingGraph
      * @param source
      * @return
      */
@@ -183,7 +178,7 @@ public class StdSparqlSdSource implements Source{
         try {
             RepositoryConnection connection = repository.getConnection();
             
-            URI p = vf.createURI(SD.NAMESPACE + "sparqlQueryTemplate");
+            IRI p = vf.createIRI(SD.NAMESPACE + "sparqlQueryTemplate");
             statements = connection.getStatements(source, p, source, true);
 
             stringStatement = statements.next().getObject().stringValue();
